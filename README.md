@@ -1,3 +1,24 @@
+# Date Planner
+
+## Motivation
+
+As a student, I often have little time to spend time with friends or to go out on my own and even less time to plan days out. This motivated the idea of this application, which has a purpose of letting people spend less time planning days out and more time going out.
+
+## Description
+
+The Date Planner project aims to develop a comprehensive web application that automates and optimizes
+the process of planning daily activities. This full-stack solution will enable users to efficiently organize,
+visualize, and manage their schedules for individual or group activities. The application will incorporate
+location-based services, intelligent recommendations, and interactive planning tools to enhance user
+productivity and experience.
+
+## Project Scope
+
+The application will implement secure user authentication, comprehensive calendar management,
+geolocation services, intuitive schedule manipulation, and collaborative planning capabilities. The
+primary objective is to deliver a robust, user-friendly platform that simplifies daily planning while
+offering advanced features for optimized time management
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
