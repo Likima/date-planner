@@ -21,7 +21,7 @@ const Map = () => {
     }
   }, []);
 
-  return <div ref={mapContainer} style={{ width: "100%", height: "100vh" }} />;
+  return <div ref={mapContainer} style={{ width: "100%", height: "100vh" }} className = "z-1" />;
 };
 
 export default Map;

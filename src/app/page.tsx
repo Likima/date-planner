@@ -12,7 +12,7 @@ export default function Home() {
         <Header />
       </div>
       <Map />
-      <div className = "h-screen flex items-center justify-center text-bold text-5xl z-10">
+      <div id = "text-overlay" className = "z-1 absolute h-screen items-center justify-center text-bold text-5xl">
         Welcome to Date Planner!  
       </div>
     </div>
