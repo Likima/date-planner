@@ -2,7 +2,7 @@ import Calendar from '@/src/components/Calendar'
 
 export default function Home() {
   return (
-    <div>
+    <div className = "h-screen">
       <Calendar
       />
     </div>
