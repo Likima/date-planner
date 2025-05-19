@@ -26,11 +26,26 @@ const Map = () => {
 
   function success(pos: GeolocationPosition): void {
     var crd = pos.coords;
+    setLocation({
+      latitude: crd.latitude,
+      longitude: crd.longitude,
+      accuracy: crd.accuracy
+    });
     console.log("Your current position is:");
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     console.log(`More or less ${crd.accuracy} meters.`);
   }
+
+  const [location, setLocation] = useState<{
+    latitude: number;
+    longitude: number;
+    accuracy: number;
+  } | null>(null);
+
+  useEffect(() => {
+    console.log('Location state updated:', location);
+  }, [location]);
 
   var options = {
     enableHighAccuracy: true,
@@ -38,7 +53,6 @@ const Map = () => {
     maximumAge: 0,
   };
 
-  const [location, setLocation] = useState(null);
   const mapContainer = useRef(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
@@ -74,16 +88,26 @@ const Map = () => {
   }, []);
 
   useEffect(() => {
+    if (location) {
+      mapRef.current?.setCenter([location.longitude, location.latitude]);
+    }
+    console.log("set location!")
+  }, [location]);
+
+  useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_KEY || "";
 
     if (mapContainer.current) {
       mapRef.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/dark-v11",
-        center: [-123.12, 49.28],
-        zoom: 9,
-        attributionControl: false, // Disable the footer
+        center: location ? [location.longitude, location.latitude] : [-123.12, 49.28],
+        zoom: 12,
+        attributionControl: false,
       });
+    }
+    if (location) {
+      console.log("hello world! ")
     }
   }, []);
 
