@@ -28,9 +28,10 @@ export default function auth(app: express.Application) {
 
     app.post('/user/login', async (req: Request, res: Response) => {
         try {
-            const { body } = req;
-            const { username } = body;
-            const { password } = body;
+            // const { body } = req;
+            console.log(req.body);
+            const username = req.body.username;
+            const password = req.body.password;
 
             console.log('Login attempt:', { username, password });
 
