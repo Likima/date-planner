@@ -2,38 +2,46 @@
 
 import { useState } from 'react';
 
+import { useAuth } from '@/src/app/authContext'
+
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showError, setShowError] = useState(false);
 
+    const { setUser } = useAuth();
+
     async function login(em: string, pw: string) {
-        console.log(em)
-        console.log(pw)
+        try {
+            const response = await fetch("http://localhost:8001/user/login", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: em,
+                    password: pw
+                })
+            });
 
-        fetch("http://localhost:8001/user/login", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: em,
-                password: pw
-            })
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    setShowError(true);
-                    throw new Error("Invalid Login")
-                }
-                if (response) {
-                    setShowError(false);
-                    return response;
-                }
-            })
-            .then((json) => console.log(json))
-            .catch((error) => console.log(error));
+            const data = await response.json();
 
+            if (!response.ok) {
+                setShowError(true);
+                throw new Error(data.error || "Invalid Login");
+            }
+
+            setShowError(false);
+            setUser({
+                name: data.user.user_metadata.username || data.user.email
+            });
+
+            // window.location.href = '/Dashboard';
+
+        } catch (error) {
+            console.error('Login error:', error);
+            setShowError(true);
+        }
     }
 
     const handleSubmit = (e: React.FormEvent) => {

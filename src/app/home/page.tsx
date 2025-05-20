@@ -1,6 +1,5 @@
 import { CustomButton } from "@/src/components/button"
 
-
 export default function Home() {
   return (
     <div>

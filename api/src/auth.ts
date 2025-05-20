@@ -106,18 +106,7 @@ export default function auth(app: express.Application) {
 
             console.log('Login attempt:', { email, password });
 
-            // if (!username || !password) {
-            //     return res.status(400).json({ error: 'Missing credentials' });
-            // }
-
-            // // TODO : Change 'privatekey' to a proper verification method // 
-            // if (username === user.username && password === user.password) {
-            //     const token = jwt.sign({ user }, 'privatekey', { expiresIn: '1h' });
-            //     return res.json({ token });
-            // }
-
-            // return res.status(401).json({ error: 'Invalid credentials' });
-        } catch (error) {
+       } catch (error) {
             console.error('Login error:', error);
             return res.status(500).json({ error: 'Internal server error' });
         }
