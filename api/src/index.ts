@@ -1,11 +1,14 @@
 import dotenv from "dotenv";
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
 import express from "express";
 import cors from "cors";
 import { register } from "@reflet/express";
 import { HelloRouter } from "@routes/example.route";
 import auth from "./auth"
 
-dotenv.config();
 
 const PORT = process.env.API_PORT || 8001;
 

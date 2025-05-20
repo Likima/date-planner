@@ -10,7 +10,7 @@ export function Header(props: React.PropsWithChildren) {
           <Link href="/Home"> Home </Link>
           <Link href="/Dashboard"> Dashboard </Link>
           <div> About </div>
-          <div> Log in </div>
+          <Link href="/login"> Log in </Link>
         </div>
       </header>
     </div>
