@@ -14,7 +14,7 @@ const PORT = process.env.API_PORT || 8001;
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 register(app, [HelloRouter]);
 auth(app);

@@ -86,7 +86,7 @@ export default function SignupPage() {
                     id="error-message"
                     style={{ display: showError ? 'block' : 'none' }}
                 >
-                    Invalid username or password
+                    Weak Password / Invalid Signup
                 </div>
             </form >
         </div >
