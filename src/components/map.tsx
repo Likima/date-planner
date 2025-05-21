@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 
+import { useLocation } from "@/src/app/locationContext";
+
 interface Coordinates {
   latitude: number;
   longitude: number;
@@ -22,7 +24,13 @@ function errors(err: GeolocationError): void {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
+// Kinda scuffed error but this map needs to load in order to access coordinates
+// in future, refactor such that the coordinates are obtained regardless. Maybe
+// do logic on backend rather than here lol
+
 const Map = () => {
+
+  const { setCoords } = useLocation();
 
   function success(pos: GeolocationPosition): void {
     var crd = pos.coords;
@@ -31,6 +39,7 @@ const Map = () => {
       longitude: crd.longitude,
       accuracy: crd.accuracy
     });
+    setCoords({ lng: crd.longitude, lat: crd.latitude });
     console.log("Your current position is:");
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);

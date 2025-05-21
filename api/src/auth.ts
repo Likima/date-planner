@@ -1,19 +1,13 @@
 import express from 'express'
 import { Request, Response, NextFunction } from 'express';
-import { createClient, GoTrueClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
 import { Database } from 'bun:sqlite';
-import { RequestHeader } from '@reflet/http';
 
 const jwt = require('jsonwebtoken');
 
 interface CustomRequest extends Request {
     token?: string
 }
-
-const user = {
-    username: "Brandon",
-    password: "1234"
-};
 
 export default function auth(app: express.Application) {
     const spb_url = process.env.SUPABASE_URL || '';

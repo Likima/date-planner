@@ -1,0 +1,47 @@
+import express from 'express';
+import axios from 'axios';
+
+export default function findPlaces(app: express.Application) {
+    const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+
+    app.post('/places', async (req, res) => {
+        const lat = req.body.latitude;
+        const lng = req.body.longitude;
+        const radius = req.body.radius;
+
+        console.log({ lat, lng });
+
+        if (!lat || !lng || !radius) {
+            return res.status(400).json({ error: 'Missing lat, lng, or radius' });
+        }
+
+        try {
+            const url = `https://places.googleapis.com/v1/places:searchNearby`;
+            const response = await axios.post(url, {
+                locationRestriction: {
+                    circle: {
+                        center: {
+                            latitude: lat,
+                            longitude: lng
+                        },
+                        radius: Number(radius * 1000)
+                    }
+                },
+                includedTypes: ["restaurant", "cafe"]
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Goog-Api-Key': GOOGLE_API_KEY,
+                    'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.location'
+                }
+            });
+
+            res.json({
+                places: response.data.places || []
+            });
+        } catch (error: any) {
+            console.error('Error fetching places:', error.message);
+            res.status(500).json({ error: 'Failed to fetch places' });
+        }
+    });
+}
