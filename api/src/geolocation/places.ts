@@ -52,10 +52,9 @@ export default function findPlaces(app: express.Application) {
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Goog-Api-Key': GOOGLE_API_KEY,
-                    'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.location'
+                    'X-Goog-FieldMask': "*"
                 }
             });
-
             res.json({
                 places: response.data.places || []
             });

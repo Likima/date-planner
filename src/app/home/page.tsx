@@ -4,12 +4,19 @@ import { useState, useEffect } from "react";
 
 import { useLocation } from "@/src/app/locationContext"
 
-interface Place {
+export interface Place {
   id: string;
   name: string;
   formattedAddress: string;
-  types?: string[];
+  types: string[];
   rating?: number;
+  nationalPhoneNumber?: string;
+  websiteUri?: string;
+  businessStatus?: string;
+  primaryTypeDisplayName?: {
+    text: string;
+    languageCode: string;
+  };
 }
 
 export default function Home() {
@@ -53,8 +60,20 @@ export default function Home() {
         throw new Error(dt.error || "Invalid Login");
       }
 
-      console.log("Received data:", dt);
-      setData(dt.places);
+      const transformedPlaces = dt.places.map((place: any) => ({
+        id: place.id,
+        name: place.displayName?.text || place.name,
+        formattedAddress: place.formattedAddress,
+        types: place.types || [],
+        rating: place.rating,
+        nationalPhoneNumber: place.nationalPhoneNumber,
+        websiteUri: place.websiteUri,
+        businessStatus: place.businessStatus,
+        primaryTypeDisplayName: place.primaryTypeDisplayName
+      }));
+
+      console.log("Transformed places:", transformedPlaces);
+      setData(transformedPlaces);
       setResponseRecieved(true);
     } catch (error) {
       console.error("Error fetching places:", error);
@@ -96,7 +115,7 @@ export default function Home() {
           </button>
 
         </form >
-        <div className={`overflow-y-auto h-[50vh] max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-all duration-500 ease-in-out my-auto ${data.length > 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full -mr-full'}`}>
+        <div className={`overflow-y-auto h-[50vh] max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-all duration-500 ease-in-out my-auto ${responseRecieved ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full -mr-full'}`}>
           <h1 className="text-3xl font-bold text-center text-gray-900">Places around you!</h1>
           {data.length > 0 ? (
             data.map((item: Place) => (
@@ -115,7 +134,7 @@ export default function Home() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    {item.types?.join(', ')}
+                    {/* {item.types?.join(', ')} */}
                   </span>
                   {item.rating && (
                     <span className="flex items-center">
