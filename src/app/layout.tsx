@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/src/components/header"
 import { AuthProvider } from "./authContext";
 import { LocationProvider } from "./locationContext"
+import { LocationInitializer } from "@/src/components/LocationInitializer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <LocationProvider>
+            <LocationInitializer />
             <Header />
             {children}
           </LocationProvider>

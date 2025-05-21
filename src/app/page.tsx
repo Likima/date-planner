@@ -3,6 +3,7 @@ import Map from "@/src/components/map";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 export default function Home() {
+
   return (
     <div className="font-mono">
       <div className="w-screen h-screen z-1 absolute">

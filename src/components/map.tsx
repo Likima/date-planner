@@ -1,107 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
-
 import { useLocation } from "@/src/app/locationContext";
 
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-  accuracy: number;
-}
-
-interface GeolocationPosition {
-  coords: Coordinates;
-}
-
-interface GeolocationError {
-  code: number;
-  message: string;
-}
-
-function errors(err: GeolocationError): void {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
-}
-
-// Kinda scuffed error but this map needs to load in order to access coordinates
-// in future, refactor such that the coordinates are obtained regardless. Maybe
-// do logic on backend rather than here lol
-
 const Map = () => {
-
-  const { setCoords } = useLocation();
-
-  function success(pos: GeolocationPosition): void {
-    var crd = pos.coords;
-    setLocation({
-      latitude: crd.latitude,
-      longitude: crd.longitude,
-      accuracy: crd.accuracy
-    });
-    setCoords({ lng: crd.longitude, lat: crd.latitude });
-    console.log("Your current position is:");
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
-  }
-
-  const [location, setLocation] = useState<{
-    latitude: number;
-    longitude: number;
-    accuracy: number;
-  } | null>(null);
-
-  useEffect(() => {
-    console.log('Location state updated:', location);
-  }, [location]);
-
-  var options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0,
-  };
-
+  const { coords } = useLocation();
   const mapContainer = useRef(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.permissions
-        .query({ name: "geolocation" })
-        .then(function (result) {
-          console.log(result);
-        })
-    } else {
-      console.log("Geolocation not supported");
+    if (coords && mapRef.current) {
+      mapRef.current.setCenter([coords.lng, coords.lat]);
     }
-  }, [])
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.permissions
-        .query({ name: "geolocation" })
-        .then(function (result) {
-          console.log(result);
-          if (result.state === "granted") {
-            navigator.geolocation.getCurrentPosition(success, errors, options);
-          } else if (result.state === "prompt") {
-            navigator.geolocation.getCurrentPosition(success, errors, options);
-          } else if (result.state === "denied") {
-            // implement denied later
-          }
-        });
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (location) {
-      mapRef.current?.setCenter([location.longitude, location.latitude]);
-    }
-    console.log("set location!")
-  }, [location]);
+  }, [coords]);
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_KEY || "";
@@ -110,13 +22,10 @@ const Map = () => {
       mapRef.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/mapbox/dark-v11",
-        center: location ? [location.longitude, location.latitude] : [-123.12, 49.28],
+        center: coords ? [coords.lng, coords.lat] : [-123.12, 49.28],
         zoom: 12,
         attributionControl: false,
       });
-    }
-    if (location) {
-      console.log("hello world! ")
     }
   }, []);
 
