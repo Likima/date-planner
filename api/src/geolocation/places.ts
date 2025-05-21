@@ -55,6 +55,7 @@ export default function findPlaces(app: express.Application) {
                     'X-Goog-FieldMask': "*"
                 }
             });
+            console.log(response.data.places[0])
             res.json({
                 places: response.data.places || []
             });

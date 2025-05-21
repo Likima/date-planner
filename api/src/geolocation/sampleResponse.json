@@ -1,0 +1,221 @@
+{
+    "name": "places/ChIJrYcuMsN0hlQR9Zdi4pAAih8",
+    "id": "ChIJrYcuMsN0hlQR9Zdi4pAAih8",
+    "types": [ "shopping_mall", "shoe_store", "gift_shop", "sporting_goods_store",
+        "clothing_store", "restaurant", "point_of_interest",
+        "food", "store", "establishment"
+    ],
+    "nationalPhoneNumber": "(604) 231-5525",
+    "internationalPhoneNumber": "+1 604-231-5525",
+    "formattedAddress": "7899 Templeton Station Rd #1000, Richmond, BC V7B 0B7, Canada",
+    "addressComponents": [
+        {
+            "longText": "1000",
+            "shortText": "1000",
+            "types": [ "subpremise" ],
+            "languageCode": "en"
+        }, {
+            "longText": "7899",
+            "shortText": "7899",
+            "types": [ "street_number" ],
+            "languageCode": "en-US"
+        }, {
+            "longText": "Templeton Station Road",
+            "shortText": "Templeton Station Rd",
+            "types": [ "route" ],
+            "languageCode": "en"
+        }, {
+            "longText": "Richmond",
+            "shortText": "Richmond",
+            "types": [ "locality", "political" ],
+            "languageCode": "en"
+        }, {
+            "longText": "Metro Vancouver",
+            "shortText": "Metro Vancouver",
+            "types": [ "administrative_area_level_2", "political" ],
+            "languageCode": "en"
+        }, {
+            "longText": "British Columbia",
+            "shortText": "BC",
+            "types": [ "administrative_area_level_1", "political" ],
+            "languageCode": "en"
+        }, {
+            "longText": "Canada",
+            "shortText": "CA",
+            "types": [ "country", "political" ],
+            "languageCode": "en"
+        }, {
+            "longText": "V7B 0B7",
+            "shortText": "V7B 0B7",
+            "types": [ "postal_code" ],
+            "languageCode": "en-US"
+        }
+    ],
+    "plusCode": {
+        "globalCode": "84XR5VW5+WQ",
+        "compoundCode": "5VW5+WQ Richmond, BC, Canada"
+    },
+    "location": {
+        "latitude": 49.1973479,
+        "longitude": -123.14053339999998
+    },
+    "viewport": {
+        "low": {
+            "latitude": 49.19632506970849,
+            "longitude": -123.14245853029149
+        },
+        "high": {
+            "latitude": 49.19902303029149,
+            "longitude": -123.1397605697085
+        }
+    },
+    "rating": 4.3,
+    "googleMapsUri": "https://maps.google.com/?cid=2272629584235239413",
+    "websiteUri": "http://www.mcarthurglen.com/ca/mcarthurglen-vancouver/en/the-experience/?utm_source=gmb&utm_medium=organic&utm_campaign=MAG22&y_source=1_Mzk5ODY1OC03MTUtbG9jYXRpb24ud2Vic2l0ZQ%3D%3D",
+    "regularOpeningHours": {
+        "openNow": true,
+        "periods": [
+            "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]"
+        ],
+        "weekdayDescriptions": [ "Monday: 10:00 AM – 9:00 PM",
+            "Tuesday: 10:00 AM – 9:00 PM", "Wednesday: 10:00 AM – 9:00 PM",
+            "Thursday: 10:00 AM – 9:00 PM", "Friday: 10:00 AM – 9:00 PM",
+            "Saturday: 10:00 AM – 9:00 PM", "Sunday: 10:00 AM – 9:00 PM"
+        ],
+        "nextCloseTime": "2025-05-22T04:00:00Z"
+    },
+    "utcOffsetMinutes": -420,
+    "adrFormatAddress": "<span class=\"street-address\">7899 Templeton Station Rd #1000</span>, <span class=\"locality\">Richmond</span>, <span class=\"region\">BC</span> <span class=\"postal-code\">V7B 0B7</span>, <span class=\"country-name\">Canada</span>",
+    "businessStatus": "OPERATIONAL",
+    "userRatingCount": 17596,
+    "iconMaskBaseUri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/shopping_pinlet",
+    "iconBackgroundColor": "#4B96F3",
+    "displayName": {
+        "text": "McArthurGlen Designer Outlet Vancouver Airport",
+        "languageCode": "en"
+    },
+    "primaryTypeDisplayName": {
+        "text": "Shopping Mall",
+        "languageCode": "en-US"
+    },
+    "currentOpeningHours": {
+        "openNow": true,
+        "periods": [
+            "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]"
+        ],
+        "weekdayDescriptions": [ "Monday: 10:00 AM – 9:00 PM",
+            "Tuesday: 10:00 AM – 9:00 PM", "Wednesday: 10:00 AM – 9:00 PM",
+            "Thursday: 10:00 AM – 9:00 PM", "Friday: 10:00 AM – 9:00 PM",
+            "Saturday: 10:00 AM – 9:00 PM", "Sunday: 10:00 AM – 9:00 PM"
+        ],
+        "nextCloseTime": "2025-05-22T04:00:00Z"
+    },
+    "primaryType": "shopping_mall",
+    "shortFormattedAddress": "7899 Templeton Station Rd #1000, Richmond",
+    "reviews": [
+        {
+            "name": "places/ChIJrYcuMsN0hlQR9Zdi4pAAih8/reviews/ChdDSUhNMG9nS0VJQ0FnSURfMFBDNTZRRRAB",
+            "relativePublishTimeDescription": "4 months ago",
+            "rating": 5,
+            "text": "[Object ...]",
+            "originalText": "[Object ...]",
+            "authorAttribution": "[Object ...]",
+            "publishTime": "2025-01-20T20:54:33.986342Z",
+            "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChdDSUhNMG9nS0VJQ0FnSURfMFBDNTZRRRAB&d=17924085&t=1",
+            "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnSURfMFBDNTZRRRAB!2m1!1s0x548674c3322e87ad:0x1f8a0090e26297f5"
+        },
+        {
+            "name": "places/ChIJrYcuMsN0hlQR9Zdi4pAAih8/reviews/ChdDSUhNMG9nS0VJQ0FnTUR3cDRQWTF3RRAB",
+            "relativePublishTimeDescription": "a month ago",
+            "rating": 5,
+            "text": "[Object ...]",
+            "originalText": "[Object ...]",
+            "authorAttribution": "[Object ...]",
+            "publishTime": "2025-03-28T18:30:18.019640Z",
+            "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChdDSUhNMG9nS0VJQ0FnTUR3cDRQWTF3RRAB&d=17924085&t=1",
+            "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnTUR3cDRQWTF3RRAB!2m1!1s0x548674c3322e87ad:0x1f8a0090e26297f5"
+        },
+        {
+            "name": "places/ChIJrYcuMsN0hlQR9Zdi4pAAih8/reviews/ChdDSUhNMG9nS0VJQ0FnSUN2czR6bjRnRRAB",
+            "relativePublishTimeDescription": "5 months ago",
+            "rating": 5,
+            "text": "[Object ...]",
+            "originalText": "[Object ...]",
+            "authorAttribution": "[Object ...]",
+            "publishTime": "2024-12-14T12:04:02.802429Z",
+            "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChdDSUhNMG9nS0VJQ0FnSUN2czR6bjRnRRAB&d=17924085&t=1",
+            "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnSUN2czR6bjRnRRAB!2m1!1s0x548674c3322e87ad:0x1f8a0090e26297f5"
+        },
+        {
+            "name": "places/ChIJrYcuMsN0hlQR9Zdi4pAAih8/reviews/ChdDSUhNMG9nS0VJQ0FnSURQbC1MTTJnRRAB",
+            "relativePublishTimeDescription": "5 months ago",
+            "rating": 5,
+            "text": "[Object ...]",
+            "originalText": "[Object ...]",
+            "authorAttribution": "[Object ...]",
+            "publishTime": "2024-12-06T06:21:02.395200Z",
+            "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChdDSUhNMG9nS0VJQ0FnSURQbC1MTTJnRRAB&d=17924085&t=1",
+            "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnSURQbC1MTTJnRRAB!2m1!1s0x548674c3322e87ad:0x1f8a0090e26297f5"
+        },
+        {
+            "name": "places/ChIJrYcuMsN0hlQR9Zdi4pAAih8/reviews/ChdDSUhNMG9nS0VJQ0FnSURQdVBQa2lRRRAB",
+            "relativePublishTimeDescription": "5 months ago",
+            "rating": 5,
+            "text": "[Object ...]",
+            "originalText": "[Object ...]",
+            "authorAttribution": "[Object ...]",
+            "publishTime": "2024-11-29T01:11:44.933825Z",
+            "flagContentUri": "https://www.google.com/local/review/rap/report?postId=ChdDSUhNMG9nS0VJQ0FnSURQdVBQa2lRRRAB&d=17924085&t=1",
+            "googleMapsUri": "https://www.google.com/maps/reviews/data=!4m6!14m5!1m4!2m3!1sChdDSUhNMG9nS0VJQ0FnSURQdVBQa2lRRRAB!2m1!1s0x548674c3322e87ad:0x1f8a0090e26297f5"
+        }
+    ],
+    "photos": [
+        {
+            "name": "places/ChIJrYcuMsN0hlQR9Zdi4pAAih8/photos/AXQCQNQGORTIQgf_Z_B_ga6qPAB1zj6f48JnM5cKkmUAGw5TgxpHyJxy6tsrvbGOVlbqPkEcukRsLcXn1lbbQIYId-Tj3Hvu1N9PN3MJmhsmVFNdjdrbpDvaocJooCmdzPSSkmS5ZWkOWcXgsBcGf_R1wG5fHTOgUStr5hOY_xFczF--tchPRLAM3apzz7TRZrolzAsYwNfAg8ZMJLgkXod07OYVHJjV4ehZillDlHYkUKC2w3PaCCwMl-Zw6XMNKxNFMWFlm_Q4r1rabp1mHSC9fUGFkjned9ho3Vqo9CMn7L-Rq6-N7EwTvzzz-9IB6WlFakZCb9TRtKyMvlrTUcXgDxTweZkJlbCtHw6VSSMaImpl9Qb62pg_MLAWelO6nOSIVdV_He4XcO-OGyoqXrwzB5o3r3IxY_Q_V1WHzxMv_nY",
+            "widthPx": 4032,
+            "heightPx": 2268,
+            "authorAttributions": [
+                "[Object ...]"
+            ],
+            "flagContentUri": "https://www.google.com/local/imagery/report/?cb_client=maps_api_places.places_api&image_key=!1e10!2sCIHM0ogKEICAgID23MKKIA&hl=en-US",
+            "googleMapsUri": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sCIHM0ogKEICAgID23MKKIA!2e10!4m2!3m1!1s0x548674c3322e87ad:0x1f8a0090e26297f5"
+        }
+    ],
+    "paymentOptions": {
+        "acceptsDebitCards": true,
+        "acceptsNfc": true
+    },
+    "parkingOptions": {
+        "freeParkingLot": true,
+        "freeStreetParking": true
+    },
+    "accessibilityOptions": {
+        "wheelchairAccessibleParking": true
+    },
+    "addressDescriptor": {
+        "landmarks": [
+            "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]", "[Object ...]"
+        ],
+        "areas": [
+            "[Object ...]"
+        ]
+    },
+    "googleMapsLinks": {
+        "directionsUri": "https://www.google.com/maps/dir//''/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x548674c3322e87ad:0x1f8a0090e26297f5!3e0",
+        "placeUri": "https://maps.google.com/?cid=2272629584235239413",
+        "writeAReviewUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x548674c3322e87ad:0x1f8a0090e26297f5!12e1",
+        "reviewsUri": "https://www.google.com/maps/place//data=!4m4!3m3!1s0x548674c3322e87ad:0x1f8a0090e26297f5!9m1!1b1",
+        "photosUri": "https://www.google.com/maps/place//data=!4m3!3m2!1s0x548674c3322e87ad:0x1f8a0090e26297f5!10e5"
+    },
+    "timeZone": {
+        "id": "America/Vancouver"
+    },
+    "postalAddress": {
+        "regionCode": "CA",
+        "languageCode": "en-US",
+        "postalCode": "V7B 0B7",
+        "administrativeArea": "British Columbia",
+        "locality": "Richmond",
+        "addressLines": [ "7899 Templeton Station Rd #1000" ]
+    }
+}

@@ -17,6 +17,10 @@ export interface Place {
     text: string;
     languageCode: string;
   };
+  startPrice?: string;
+  endPrice?: string;
+  priceLevel?: string;
+  priceUnits?: string;
 }
 
 export default function Home() {
@@ -66,6 +70,10 @@ export default function Home() {
         formattedAddress: place.formattedAddress,
         types: place.types || [],
         rating: place.rating,
+        priceLevel: place.priceLevel,
+        startPrice: place.priceRange.startPrice.units,
+        endPrice: place.priceRange.endPrice.units,
+        priceUnits: place.priceRange.startPrice.currencyCode,
         nationalPhoneNumber: place.nationalPhoneNumber,
         websiteUri: place.websiteUri,
         businessStatus: place.businessStatus,
@@ -119,9 +127,10 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-center text-gray-900">Places around you!</h1>
           {data.length > 0 ? (
             data.map((item: Place) => (
-              <div
+              <button
                 key={item.id}
                 className="bg-white/20 backdrop-blur-sm rounded-lg p-4 mb-4 hover:bg-white/30 transition-all duration-300"
+                onClick={() => { console.log(item) }}
               >
                 <h3 className="text-xl font-semibold text-white mb-2">
                   {item.name}
@@ -134,7 +143,7 @@ export default function Home() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    {/* {item.types?.join(', ')} */}
+                    {/* {item.startPrice} */}
                   </span>
                   {item.rating && (
                     <span className="flex items-center">
@@ -145,7 +154,7 @@ export default function Home() {
                     </span>
                   )}
                 </div>
-              </div>
+              </button>
             ))) : (
             <div className="text-white text-center">
               No places found in this area
