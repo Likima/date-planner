@@ -10,9 +10,17 @@ export default function Home() {
 
   const { coords } = useLocation();
 
-  const [sliderValue, setSliderValue] = useState(12.5);
+  const [sliderValue, setSliderValue] = useState(5);
   const [responseRecieved, setResponseRecieved] = useState(false);
   const [data, setData] = useState<Place[]>([]);
+  const [buttonClicked, setButtonClicked] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
+
+  const handleButtonClick = (e: React.FormEvent, item: Place) => {
+    e.preventDefault();
+    console.log(item);
+    setButtonClicked(true);
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,8 +66,16 @@ export default function Home() {
 
   return (
     <div>
-      <div className={`min-h-screen font-mono flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-800 py-12 px-4 sm:px-6 lg:px-8`}>
-        <form className={`-transform-x-14 max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-transform duration-500 ${responseRecieved ? '-translate-x-[500%]' : ''}`} onSubmit={handleSubmit}>
+      <div className={`z-0 fixed inset-0 bg-gray-600 m-20 rounded-4xl shadow-lg ${buttonClicked ? "opacity-100 z-50" : "opacity-0"}`}>
+        
+        <button
+          className={`bg-red-600 p-10 rounded-3xl`}
+          onClick={() => { setButtonClicked(false) }}>
+          Close
+        </button>
+      </div>
+      <div className={`z-2 min-h-screen font-mono flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-800 py-12 px-4 sm:px-6 lg:px-8`}>
+        <form className={`z-2 -transform-x-14 max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-transform duration-500 ${responseRecieved ? '-translate-x-[500%]' : ''}`} onSubmit={handleSubmit}>
           <h1 className="text-3xl font-bold text-center text-gray-900">Plan a Day Out!</h1>
           <div className="space-y-4">
             <div>
@@ -97,7 +113,7 @@ export default function Home() {
               <button
                 key={item.id}
                 className="bg-white/20 backdrop-blur-sm rounded-lg p-4 mb-4 hover:bg-white/30 transition-all duration-300"
-                onClick={() => { console.log(item) }}
+                onClick={(e) => { handleButtonClick(e, item) }}
               >
                 <h3 className="text-xl font-semibold text-white mb-2">
                   {`${item.displayName.text} (${getDistance(item.location?.longitude, item.location?.latitude)}km)`}
@@ -132,7 +148,6 @@ export default function Home() {
             </div>)}
         </div>
       </div >
-
     </div>
   );
 }
