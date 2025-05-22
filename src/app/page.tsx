@@ -4,6 +4,7 @@ import Map from "@/src/components/map";
 */
 
 export default function Home() {
+
   return (
     <div className="font-mono">
       <div className="w-screen h-screen z-1 absolute">

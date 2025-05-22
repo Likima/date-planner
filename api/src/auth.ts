@@ -2,7 +2,6 @@ import express from 'express'
 import { Request, Response, NextFunction } from 'express';
 import { createClient } from '@supabase/supabase-js'
 import { Database } from 'bun:sqlite';
-import { RequestHeader } from '@reflet/http';
 
 const jwt = require('jsonwebtoken');
 
@@ -10,14 +9,11 @@ interface CustomRequest extends Request {
     token?: string
 }
 
-const user = {
-    username: "Brandon",
-    password: "1234"
-};
-
 export default function auth(app: express.Application) {
     const spb_url = process.env.SUPABASE_URL || '';
     const spb_key = process.env.SUPABASE_ANON_KEY || '';
+
+    var isLoggedIn = false;
 
     if (spb_url == '' || spb_key == '') {
         console.log("Supabase Key or URL not provided!");
@@ -95,6 +91,7 @@ export default function auth(app: express.Application) {
 
             if (data.user) {
                 console.log("login success!")
+                isLoggedIn = true;
                 return res.status(200).json({
                     message: 'Login successful',
                     user: data.user
@@ -103,18 +100,7 @@ export default function auth(app: express.Application) {
 
             console.log('Login attempt:', { email, password });
 
-            // if (!username || !password) {
-            //     return res.status(400).json({ error: 'Missing credentials' });
-            // }
-
-            // // TODO : Change 'privatekey' to a proper verification method // 
-            // if (username === user.username && password === user.password) {
-            //     const token = jwt.sign({ user }, 'privatekey', { expiresIn: '1h' });
-            //     return res.json({ token });
-            // }
-
-            // return res.status(401).json({ error: 'Invalid credentials' });
-        } catch (error) {
+       } catch (error) {
             console.error('Login error:', error);
             return res.status(500).json({ error: 'Internal server error' });
         }
@@ -135,4 +121,19 @@ export default function auth(app: express.Application) {
         })
     });
 
+    app.get('/user/loggedin', async (req: Request, res: Response) => {
+        console.log("Checking if logged in now...")
+        const { data: { user } } = await supabase.auth.getUser()
+        console.log(user);
+        if (!user) {
+            res.json({
+                loggedIn: false,
+                username: null
+            })
+        }
+        else res.json({
+            loggedIn: isLoggedIn,
+            username: user.user_metadata
+        })
+    })
 }
