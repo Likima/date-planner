@@ -55,9 +55,8 @@ export default function findPlaces(app: express.Application) {
                     'X-Goog-FieldMask': "*"
                 }
             });
-            console.log(response.data.places[0])
             res.json({
-                places: response.data.places || []
+                plc: response.data || []
             });
         } catch (error: any) {
             console.error('Error fetching places:', error.message);

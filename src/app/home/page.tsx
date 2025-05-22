@@ -3,25 +3,7 @@
 import { useState, useEffect } from "react";
 
 import { useLocation } from "@/src/app/locationContext"
-
-export interface Place {
-  id: string;
-  name: string;
-  formattedAddress: string;
-  types: string[];
-  rating?: number;
-  nationalPhoneNumber?: string;
-  websiteUri?: string;
-  businessStatus?: string;
-  primaryTypeDisplayName?: {
-    text: string;
-    languageCode: string;
-  };
-  startPrice?: string;
-  endPrice?: string;
-  priceLevel?: string;
-  priceUnits?: string;
-}
+import { Place } from "@/src/types/types"
 
 export default function Home() {
 
@@ -64,24 +46,23 @@ export default function Home() {
         throw new Error(dt.error || "Invalid Login");
       }
 
-      const transformedPlaces = dt.places.map((place: any) => ({
-        id: place.id,
-        name: place.displayName?.text || place.name,
-        formattedAddress: place.formattedAddress,
-        types: place.types || [],
-        rating: place.rating,
-        priceLevel: place.priceLevel,
-        startPrice: place.priceRange.startPrice.units,
-        endPrice: place.priceRange.endPrice.units,
-        priceUnits: place.priceRange.startPrice.currencyCode,
-        nationalPhoneNumber: place.nationalPhoneNumber,
-        websiteUri: place.websiteUri,
-        businessStatus: place.businessStatus,
-        primaryTypeDisplayName: place.primaryTypeDisplayName
-      }));
+      // var transformedPlaces = dt.places.map((place: Place) => ({
+      //   id: place.id,
+      //   name: place.displayName?.text || place.name,
+      //   formattedAddress: place.formattedAddress,
+      //   types: place.types || [],
+      //   rating: place.rating,
+      //   nationalPhoneNumber: place.nationalPhoneNumber,
+      //   websiteUri: place.websiteUri,
+      //   businessStatus: place.businessStatus,
+      //   primaryTypeDisplayName: place.primaryTypeDisplayName
+      // }));
 
-      console.log("Transformed places:", transformedPlaces);
-      setData(transformedPlaces);
+      // transformedPlaces.startPrice = dt.places.
+
+      //   console.log("Transformed places:", transformedPlaces);
+      console.log(dt.plc)
+      setData(dt.plc.places);
       setResponseRecieved(true);
     } catch (error) {
       console.error("Error fetching places:", error);
@@ -133,7 +114,7 @@ export default function Home() {
                 onClick={() => { console.log(item) }}
               >
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  {item.name}
+                  {item.displayName.text}
                 </h3>
                 <p className="text-gray-200 text-sm mb-2">
                   {item.formattedAddress}
@@ -143,7 +124,11 @@ export default function Home() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    {/* {item.startPrice} */}
+                    {item.priceLevel === 'PRICE_LEVEL_FREE' ? 'Free' :
+                      item.priceLevel === 'PRICE_LEVEL_INEXPENSIVE' ? '$' :
+                        item.priceLevel === 'PRICE_LEVEL_MODERATE' ? '$$' :
+                          item.priceLevel === 'PRICE_LEVEL_EXPENSIVE' ? '$$$' :
+                            item.priceLevel === 'PRICE_LEVEL_VERY_EXPENSIVE' ? '$$$$' : 'Price Level Unavailable'}
                   </span>
                   {item.rating && (
                     <span className="flex items-center">
