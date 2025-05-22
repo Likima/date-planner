@@ -47,7 +47,8 @@ export default function findPlaces(app: express.Application) {
                         radius: Number(radius * 1000)
                     }
                 },
-                includedTypes: ["restaurant", "cafe"]
+                includedTypes: ["restaurant", "cafe"],
+                rankPreference: "POPULARITY"
             }, {
                 headers: {
                     'Content-Type': 'application/json',

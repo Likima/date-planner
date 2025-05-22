@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { useLocation } from "@/src/app/locationContext"
 import { Place } from "@/src/types/types"
+import { getDistance } from "@/src/core/distanceFunctions";
 
 export default function Home() {
 
@@ -46,21 +47,6 @@ export default function Home() {
         throw new Error(dt.error || "Invalid Login");
       }
 
-      // var transformedPlaces = dt.places.map((place: Place) => ({
-      //   id: place.id,
-      //   name: place.displayName?.text || place.name,
-      //   formattedAddress: place.formattedAddress,
-      //   types: place.types || [],
-      //   rating: place.rating,
-      //   nationalPhoneNumber: place.nationalPhoneNumber,
-      //   websiteUri: place.websiteUri,
-      //   businessStatus: place.businessStatus,
-      //   primaryTypeDisplayName: place.primaryTypeDisplayName
-      // }));
-
-      // transformedPlaces.startPrice = dt.places.
-
-      //   console.log("Transformed places:", transformedPlaces);
       console.log(dt.plc)
       setData(dt.plc.places);
       setResponseRecieved(true);
@@ -114,7 +100,7 @@ export default function Home() {
                 onClick={() => { console.log(item) }}
               >
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  {item.displayName.text}
+                  {`${item.displayName.text} (${getDistance(item.location?.longitude, item.location?.latitude)}km)`}
                 </h3>
                 <p className="text-gray-200 text-sm mb-2">
                   {item.formattedAddress}
