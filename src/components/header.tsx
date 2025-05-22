@@ -9,7 +9,7 @@ export function Header(props: React.PropsWithChildren) {
         <div className="flex bg-green justify-around">
           <Link href="/Home"> Home </Link>
           <Link href="/Dashboard"> Dashboard </Link>
-          <div> About </div>
+          <Link href="/About"> About </Link>
           <Link href="/login"> Log in </Link>
         </div>
       </header>

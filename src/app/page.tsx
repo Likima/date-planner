@@ -1,6 +1,7 @@
 import Map from "@/src/components/map";
 
-import "mapbox-gl/dist/mapbox-gl.css";
+/*import "mapbox-gl/dist/mapbox-gl.css";
+*/
 
 export default function Home() {
   return (

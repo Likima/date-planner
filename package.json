@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bun": "latest",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/node": "^20.17.47",
@@ -31,7 +32,6 @@
     "express": "^5.1.0",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3",
-    "@types/bun": "latest"
+    "typescript": "^5.8.3"
   }
 }
