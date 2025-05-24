@@ -7,6 +7,15 @@ import { Place } from "@/src/types/types"
 import { getDistance } from "@/src/core/distanceFunctions";
 import { LocationDisplay } from "@/src/components/locationDisplay";
 
+interface DateTimeInfo {
+  year: number | null,
+  month: number | null,
+  day: number | null,
+  startTime: number | null,
+  endTime: number | null,
+  isAM: boolean | null
+}
+
 export default function Home() {
 
   const { coords } = useLocation();
@@ -16,6 +25,7 @@ export default function Home() {
   const [data, setData] = useState<Place[]>([]);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [currentItem, setCurrentItem] = useState<Place | null>(null);
+  const [DateInfo, setDateInfo] = useState<DateTimeInfo | null>(null);
 
   const handleButtonClick = (e: React.FormEvent, item: Place) => {
     e.preventDefault();
@@ -75,7 +85,7 @@ export default function Home() {
           onClick={() => { setButtonClicked(false) }}>
           Close
         </button>
-        <LocationDisplay 
+        <LocationDisplay
           data={currentItem}
         />
       </div>
@@ -100,6 +110,38 @@ export default function Home() {
                   <span>20</span>
                 </div>
                 <div>{sliderValue}km</div>
+              </div>
+              <div className="w-full max-w-md mx-auto p-4">
+                <label htmlFor="day" className="block mb-2 text-sm font-medium text-gray-700">Select a Date</label>
+                <input
+                  type="date"
+                  id="day"
+                  name="date"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                ></input>
+              </div>
+              <div className="w-full max-w-md mx-auto p-4">
+                <label className="block mb-2 text-sm font-medium text-gray-700">Select Time Range</label>
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <label htmlFor="startTime" className="block text-xs text-gray-600">Start Time</label>
+                    <input
+                      type="time"
+                      id="startTime"
+                      name="startTime"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label htmlFor="endTime" className="block text-xs text-gray-600">End Time</label>
+                    <input
+                      type="time"
+                      id="endTime"
+                      name="endTime"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
