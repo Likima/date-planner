@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useLocation } from "@/src/app/locationContext"
 import { Place } from "@/src/types/types"
 import { getDistance } from "@/src/core/distanceFunctions";
+import { LocationDisplay } from "@/src/components/locationDisplay";
 
 export default function Home() {
 
@@ -14,12 +15,13 @@ export default function Home() {
   const [responseRecieved, setResponseRecieved] = useState(false);
   const [data, setData] = useState<Place[]>([]);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [currentItem, setCurrentItem] = useState(null);
+  const [currentItem, setCurrentItem] = useState<Place | null>(null);
 
   const handleButtonClick = (e: React.FormEvent, item: Place) => {
     e.preventDefault();
     console.log(item);
     setButtonClicked(true);
+    setCurrentItem(item);
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -67,12 +69,15 @@ export default function Home() {
   return (
     <div>
       <div className={`z-0 fixed inset-0 bg-gray-600 m-20 rounded-4xl shadow-lg ${buttonClicked ? "opacity-100 z-50" : "opacity-0"}`}>
-        
+
         <button
-          className={`bg-red-600 p-10 rounded-3xl`}
+          className={`bg-red-600 p-10 rounded-3xl m-10 justify-end`}
           onClick={() => { setButtonClicked(false) }}>
           Close
         </button>
+        <LocationDisplay 
+          data={currentItem}
+        />
       </div>
       <div className={`z-2 min-h-screen font-mono flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-800 py-12 px-4 sm:px-6 lg:px-8`}>
         <form className={`z-2 -transform-x-14 max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-transform duration-500 ${responseRecieved ? '-translate-x-[500%]' : ''}`} onSubmit={handleSubmit}>
