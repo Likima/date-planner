@@ -1,31 +1,43 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useLocation } from "@/src/app/locationContext"
 import { Place } from "@/src/types/types"
 import { getDistance } from "@/src/core/distanceFunctions";
 import { LocationDisplay } from "@/src/components/locationDisplay";
+import { ErrorMessage } from "@/src/components/errorMessage";
 
-interface DateTimeInfo {
+interface DateDayInfo {
   year: number | null,
   month: number | null,
-  day: number | null,
-  startTime: number | null,
-  endTime: number | null,
-  isAM: boolean | null
+  day: number | null
+}
+
+interface DateTimeInfo { // formatted in 24 hour time
+  startTime: string | null,
+  endTime: string | null
 }
 
 export default function Home() {
 
   const { coords } = useLocation();
 
+  // states for user input
   const [sliderValue, setSliderValue] = useState(5);
   const [responseRecieved, setResponseRecieved] = useState(false);
   const [data, setData] = useState<Place[]>([]);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [currentItem, setCurrentItem] = useState<Place | null>(null);
-  const [DateInfo, setDateInfo] = useState<DateTimeInfo | null>(null);
+  const [DateInfo, setDateInfo] = useState<DateDayInfo | null>(null);
+
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [DateTime, setDateTime] = useState<DateTimeInfo | null>(null);
+
+  // states for user errors
+  const [dateNotSet, setDateNotSet] = useState(false); // <- false if there is a dti field not set
+  const [timeNotSet, setTimeNotSet] = useState(false);
 
   const handleButtonClick = (e: React.FormEvent, item: Place) => {
     e.preventDefault();
@@ -36,6 +48,17 @@ export default function Home() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // basic checks for if the form is filled out
+    if (!startTime || !endTime) {
+      setTimeNotSet(true);
+    } else {
+      setDateTime({ startTime: startTime, endTime: endTime })
+      setTimeNotSet(false);
+    }
+    setDateNotSet(!!DateTime ? false : true);
+
+
     if (coords && coords.lng && coords.lat) {
       console.log({ lng: coords.lng, lat: coords.lat, sliderValue })
       findPlaces(coords.lat, coords.lng, sliderValue);
@@ -43,6 +66,8 @@ export default function Home() {
     else {
       console.log("Please check if geolocation is enabled!")
     }
+
+
   };
 
   async function findPlaces(lat: number, lng: number, rad: number) {
@@ -118,6 +143,17 @@ export default function Home() {
                   id="day"
                   name="date"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={(e) => {
+                    const date = e.target.value;
+                    const [year, month, day] = date.split("-");
+                    const newDateInfo = {
+                      year: parseInt(year),
+                      month: parseInt(month),
+                      day: parseInt(day)
+                    };
+                    setDateInfo(newDateInfo);
+                    console.log('New date info:', newDateInfo);
+                  }}
                 ></input>
               </div>
               <div className="w-full max-w-md mx-auto p-4">
@@ -130,6 +166,7 @@ export default function Home() {
                       id="startTime"
                       name="startTime"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      onChange={(e) => { setStartTime(e.target.value) }}
                     />
                   </div>
                   <div className="flex-1">
@@ -139,6 +176,7 @@ export default function Home() {
                       id="endTime"
                       name="endTime"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      onChange={(e) => { setEndTime(e.target.value) }}
                     />
                   </div>
                 </div>
@@ -151,7 +189,12 @@ export default function Home() {
           >
             Plan
           </button>
-
+          <div>
+            <ErrorMessage showCondition={timeNotSet} message={"Enter a valid time"} />
+          </div>
+          <div>
+            <ErrorMessage showCondition={dateNotSet} message={"Enter a valid day"} />
+          </div>
         </form >
         <div className={`overflow-y-auto h-[50vh] max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-all duration-500 ease-in-out my-auto ${responseRecieved ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full -mr-full'}`}>
           <h1 className="text-3xl font-bold text-center text-gray-900">Places around you!</h1>
@@ -194,7 +237,7 @@ export default function Home() {
               No places found in this area
             </div>)}
         </div>
-      </div >
+      </div>
     </div>
   );
 }

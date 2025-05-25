@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { useAuth } from '@/src/app/authContext'
+import { ErrorMessage } from '@/src/components/errorMessage';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -88,11 +89,8 @@ export default function LoginPage() {
                 >
                     Sign Up
                 </button>
-                <div className="mt-4 text-red-500 text-center"
-                    id="error-message"
-                    style={{ display: showError ? 'block' : 'none' }}
-                >
-                    Invalid email or password
+                <div>
+                    <ErrorMessage showCondition={showError} message={"Invalid Login"} />
                 </div>
             </form >
         </div >
