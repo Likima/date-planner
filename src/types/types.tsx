@@ -84,3 +84,20 @@ export interface Place {
         addressLines: string[];
     };
 }
+
+export interface DateDayInfo {
+    year: number | null,
+    month: number | null,
+    day: number | null
+}
+
+export interface DateTimeInfo { // formatted in 24 hour time
+    startTime: string | null,
+    endTime: string | null
+}
+
+export interface PlaceNode {
+    date: DateDayInfo | null,
+    time: DateTimeInfo | null,
+    place: Place
+}

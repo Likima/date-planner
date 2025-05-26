@@ -3,21 +3,11 @@
 import { useState, useEffect } from "react";
 
 import { useLocation } from "@/src/app/locationContext"
-import { Place } from "@/src/types/types"
+import { Place, DateDayInfo, DateTimeInfo, PlaceNode } from "@/src/types/types"
 import { getDistance } from "@/src/core/distanceFunctions";
 import { LocationDisplay } from "@/src/components/locationDisplay";
 import { ErrorMessage } from "@/src/components/errorMessage";
-
-interface DateDayInfo {
-  year: number | null,
-  month: number | null,
-  day: number | null
-}
-
-interface DateTimeInfo { // formatted in 24 hour time
-  startTime: string | null,
-  endTime: string | null
-}
+import { DateView } from "@/src/components/dateView";
 
 export default function Home() {
 
@@ -28,16 +18,22 @@ export default function Home() {
   const [responseRecieved, setResponseRecieved] = useState(false);
   const [data, setData] = useState<Place[]>([]);
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [showDate, setShowDate] = useState(false);
   const [currentItem, setCurrentItem] = useState<Place | null>(null);
   const [DateInfo, setDateInfo] = useState<DateDayInfo | null>(null);
+  const [SelectedPlaces, setSelectedPlaces] = useState<PlaceNode[] | null>(null);
 
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [DateTime, setDateTime] = useState<DateTimeInfo | null>(null);
 
+  const [userSearch, setUserSearch] = useState('');
+
   // states for user errors
   const [dateNotSet, setDateNotSet] = useState(false); // <- false if there is a dti field not set
   const [timeNotSet, setTimeNotSet] = useState(false);
+  const [searchNotSet, setSearchNotSet] = useState(false);
+  const [showDateInfo, setShowDateInfo] = useState(false);
 
   const handleButtonClick = (e: React.FormEvent, item: Place) => {
     e.preventDefault();
@@ -56,7 +52,13 @@ export default function Home() {
       setDateTime({ startTime: startTime, endTime: endTime })
       setTimeNotSet(false);
     }
-    setDateNotSet(!!DateTime ? false : true);
+    setDateNotSet(!DateInfo);
+
+    if (userSearch == '') {
+      setSearchNotSet(true);
+    } else {
+      setSearchNotSet(false);
+    }
 
 
     if (coords && coords.lng && coords.lat) {
@@ -66,18 +68,17 @@ export default function Home() {
     else {
       console.log("Please check if geolocation is enabled!")
     }
-
-
   };
 
   async function findPlaces(lat: number, lng: number, rad: number) {
     try {
-      const response = await fetch('http://localhost:8001/places', {
+      const response = await fetch('http://localhost:8001/places/specific', {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          search: userSearch,
           latitude: lat,
           longitude: lng,
           radius: rad
@@ -104,7 +105,6 @@ export default function Home() {
   return (
     <div>
       <div className={`z-0 fixed inset-0 bg-gray-600 m-20 rounded-4xl shadow-lg ${buttonClicked ? "opacity-100 z-50" : "opacity-0"}`}>
-
         <button
           className={`bg-red-600 p-10 rounded-3xl m-10 justify-end`}
           onClick={() => { setButtonClicked(false) }}>
@@ -113,9 +113,37 @@ export default function Home() {
         <LocationDisplay
           data={currentItem}
         />
+        <button
+          className={`w-full py-2 px-4 ${SelectedPlaces?.find(place => place.place.id === currentItem?.id) ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} text-white font-semibold rounded-md transition duration-200 m-10`}
+          onClick={() => {
+            if (currentItem) {
+              if (SelectedPlaces?.find(place => place.place.id === currentItem.id)) {
+                setSelectedPlaces(SelectedPlaces.filter(place => place.place.id !== currentItem.id));
+              } else {
+                setSelectedPlaces(prev => prev ? [...prev, { place: currentItem, date: DateInfo, time: DateTime }] : [{ place: currentItem, date: DateInfo, time: DateTime }]);
+              }
+            }
+            console.log(SelectedPlaces);
+          }}
+        >
+          {SelectedPlaces?.find(place => place.place.id === currentItem?.id) ? 'Remove' : 'Add'}
+        </button>
+      </div>
+      <div className={`overflow-scroll z-0 fixed inset-0 bg-gray-600 m-20 rounded-4xl shadow-lg ${showDate ? "opacity-100 z-50" : "opacity-0"}`}>
+        <button
+          className={`bg-red-600 p-10 rounded-3xl m-10 justify-end`}
+          onClick={() => { setShowDate(false) }}>
+          Close
+        </button>
+        <DateView
+          isShowing={showDateInfo}
+          placeInfo={!SelectedPlaces ? currentItem : SelectedPlaces[0].place}
+          dti={!SelectedPlaces ? null : SelectedPlaces[0].time}
+          ddi={!SelectedPlaces ? null : SelectedPlaces[0].date}
+        />
       </div>
       <div className={`z-2 min-h-screen font-mono flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-800 py-12 px-4 sm:px-6 lg:px-8`}>
-        <form className={`z-2 -transform-x-14 max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-transform duration-500 ${responseRecieved ? '-translate-x-[500%]' : ''}`} onSubmit={handleSubmit}>
+        <form className={`z-2 -transform-x-14 max-w-md w-full space-y-3 bg-white/10 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-purple-300/20 transform transition-transform duration-500 ${responseRecieved ? '-translate-x-[500%]' : ''}`} onSubmit={handleSubmit}>
           <h1 className="text-3xl font-bold text-center text-gray-900">Plan a Day Out!</h1>
           <div className="space-y-4">
             <div>
@@ -151,8 +179,10 @@ export default function Home() {
                       month: parseInt(month),
                       day: parseInt(day)
                     };
-                    setDateInfo(newDateInfo);
-                    console.log('New date info:', newDateInfo);
+                    if (!year || !month || !day) {
+                      setDateInfo(null);
+                    }
+                    else setDateInfo(newDateInfo);
                   }}
                 ></input>
               </div>
@@ -183,20 +213,38 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <div className="w-full max-w-md mx-auto p-4">
+            <label htmlFor="search" className="block mb-2 text-sm font-medium text-gray-700">Search for places</label>
+            <input
+              type="text"
+              id="search"
+              value={userSearch}
+              onChange={(e) => setUserSearch(e.target.value)}
+              placeholder="Enter keywords..."
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200"
           >
-            Plan
+            Add
           </button>
-          <div>
-            <ErrorMessage showCondition={timeNotSet} message={"Enter a valid time"} />
-          </div>
-          <div>
-            <ErrorMessage showCondition={dateNotSet} message={"Enter a valid day"} />
-          </div>
-        </form >
-        <div className={`overflow-y-auto h-[50vh] max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-all duration-500 ease-in-out my-auto ${responseRecieved ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full -mr-full'}`}>
+
+          <ErrorMessage showCondition={timeNotSet} message={"Enter a valid time"} />
+          <ErrorMessage showCondition={dateNotSet} message={"Enter a valid day"} />
+          <ErrorMessage showCondition={searchNotSet} message={"Enter a search request!"} />
+        </form>
+        <button
+          className={`z-10 w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200 m-10 ${responseRecieved ? '-translate-x-[500%]' : ''}`}
+          onClick={() => {
+            console.log(SelectedPlaces);
+            setShowDate(true);
+          }}
+        >
+          View Current Date
+        </button>
+        <div className={`overflow-y-auto h-[50vh] max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-all duration-500 ease-in-out my-auto fixed right-8 ${responseRecieved ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}>
           <h1 className="text-3xl font-bold text-center text-gray-900">Places around you!</h1>
           {data.length > 0 ? (
             data.map((item: Place) => (
@@ -236,6 +284,12 @@ export default function Home() {
             <div className="text-white text-center">
               No places found in this area
             </div>)}
+          <button
+            className={`w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200 m-10}`}
+            onClick={() => { setResponseRecieved(false) }}
+          >
+            Back to Planning...
+          </button>
         </div>
       </div>
     </div>
