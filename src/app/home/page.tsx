@@ -13,6 +13,7 @@ import { ErrorMessage } from "@/src/components/errorMessage";
 import { DateView } from "@/src/components/dateView";
 import { Slider } from "@/src/components/FormComponents/slider";
 import { DateInput } from "@/src/components/FormComponents/dateInput";
+import { TimeInput } from "@/src/components/FormComponents/timeInput";
 
 export default function Home() {
 
@@ -167,26 +168,18 @@ export default function Home() {
               <div className="w-full max-w-md mx-auto p-4">
                 <label className="block mb-2 text-sm font-medium text-gray-700">Select Time Range</label>
                 <div className="flex gap-4">
-                  <div className="flex-1">
-                    <label htmlFor="startTime" className="block text-xs text-gray-600">Start Time</label>
-                    <input
-                      type="time"
-                      id="startTime"
-                      name="startTime"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      onChange={(e) => { setStartTime(e.target.value) }}
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label htmlFor="endTime" className="block text-xs text-gray-600">End Time</label>
-                    <input
-                      type="time"
-                      id="endTime"
-                      name="endTime"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      onChange={(e) => { setEndTime(e.target.value) }}
-                    />
-                  </div>
+                  <TimeInput
+                    label = "StartTime"
+                    htmlfor = "startTime"
+                    id = "startTime"
+                    onChange = {setStartTime}
+                  />
+                  <TimeInput
+                    label = "EndTime"
+                    htmlfor = "endTime"
+                    id = "endTIme"
+                    onChange = {setEndTime}
+                  />
                 </div>
               </div>
             </div>

@@ -85,17 +85,20 @@ export interface Place {
     };
 }
 
+// interface for the day the user wants to plan the date on.
 export interface DateDayInfo {
     year: number | null,
     month: number | null,
     day: number | null
 }
 
+// interface for the start time and end time of a date / location ? 
 export interface DateTimeInfo { // formatted in 24 hour time
     startTime: string | null,
     endTime: string | null
 }
 
+// interface that contains ALL the information of a place the user wants to go to
 export interface PlaceNode {
     date: DateDayInfo | null,
     time: DateTimeInfo | null,
