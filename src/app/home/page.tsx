@@ -12,6 +12,7 @@ import { LocationDisplay } from "@/src/components/locationDisplay";
 import { ErrorMessage } from "@/src/components/errorMessage";
 import { DateView } from "@/src/components/dateView";
 import { Slider } from "@/src/components/FormComponents/slider";
+import { DateInput } from "@/src/components/FormComponents/dateInput";
 
 export default function Home() {
 
@@ -159,28 +160,10 @@ export default function Home() {
                 max={20}
                 label="Choose a Suitable Distance"
               />
-              <div className="w-full max-w-md mx-auto p-4">
-                <label htmlFor="day" className="block mb-2 text-sm font-medium text-gray-700">Select a Date</label>
-                <input
-                  type="date"
-                  id="day"
-                  name="date"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  onChange={(e) => {
-                    const date = e.target.value;
-                    const [year, month, day] = date.split("-");
-                    const newDateInfo = {
-                      year: parseInt(year),
-                      month: parseInt(month),
-                      day: parseInt(day)
-                    };
-                    if (!year || !month || !day) {
-                      setDateInfo(null);
-                    }
-                    else setDateInfo(newDateInfo);
-                  }}
-                ></input>
-              </div>
+              <DateInput
+                label="Choose a Date"
+                onChange={setDateInfo}
+              />
               <div className="w-full max-w-md mx-auto p-4">
                 <label className="block mb-2 text-sm font-medium text-gray-700">Select Time Range</label>
                 <div className="flex gap-4">
