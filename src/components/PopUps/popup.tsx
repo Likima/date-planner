@@ -8,7 +8,7 @@ interface PopUpProps {
 
 export function PopUp({ open, makeClosed, children }: PopUpProps) {
     return (
-        <div className={`overflow-scroll z-0 fixed inset-0 bg-gray-600 m-20 rounded-4xl shadow-lg ${open ? "opacity-100 z-50" : "opacity-0"}`}>
+        <div className={`overflow-scroll z-0 fixed inset-0 bg-gradient-to-br from-indigo-700 to-purple-600 m-20 rounded-4xl shadow-lg ${open ? "opacity-100 z-50" : "opacity-0"}`}>
             <CloseButton
                 onClick={makeClosed}
             />

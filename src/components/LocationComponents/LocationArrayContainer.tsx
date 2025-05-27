@@ -16,7 +16,7 @@ export function LocationArrayContainer({ data, showMoreDetails, navBack, visible
             {data && data.length > 0 ? (
                 data.map((item: Place) => (
                     <LocationArrayEntry
-                        key = {item.id}
+                        key={item.id}
                         item={item}
                         onClick={showMoreDetails}
                     />
