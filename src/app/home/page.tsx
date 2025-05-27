@@ -15,6 +15,7 @@ import { Slider } from "@/src/components/FormComponents/slider";
 import { DateInput } from "@/src/components/FormComponents/dateInput";
 import { TimeInput } from "@/src/components/FormComponents/timeInput";
 import { KeywordSearch } from "@/src/components/FormComponents/keywordSearch";
+import { PopUp } from "@/src/components/PopUps/popup";
 
 export default function Home() {
 
@@ -111,45 +112,46 @@ export default function Home() {
 
   return (
     <div>
-      <div className={`z-0 fixed inset-0 bg-gray-600 m-20 rounded-4xl shadow-lg ${buttonClicked ? "opacity-100 z-50" : "opacity-0"}`}>
-        <button
-          className={`bg-red-600 p-10 rounded-3xl m-10 justify-end`}
-          onClick={() => { setButtonClicked(false) }}>
-          Close
-        </button>
-        <LocationDisplay
-          data={currentItem}
-        />
-        <button
-          className={`w-full py-2 px-4 ${SelectedPlaces?.find(place => place.place.id === currentItem?.id) ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} text-white font-semibold rounded-md transition duration-200 m-10`}
-          onClick={() => {
-            if (currentItem) {
-              if (SelectedPlaces?.find(place => place.place.id === currentItem.id)) {
-                setSelectedPlaces(SelectedPlaces.filter(place => place.place.id !== currentItem.id));
-              } else {
-                setSelectedPlaces(prev => prev ? [...prev, { place: currentItem, date: DateInfo, time: DateTime }] : [{ place: currentItem, date: DateInfo, time: DateTime }]);
-              }
-            }
-            console.log(SelectedPlaces);
-          }}
-        >
-          {SelectedPlaces?.find(place => place.place.id === currentItem?.id) ? 'Remove' : 'Add'}
-        </button>
-      </div>
-      <div className={`overflow-scroll z-0 fixed inset-0 bg-gray-600 m-20 rounded-4xl shadow-lg ${showDate ? "opacity-100 z-50" : "opacity-0"}`}>
-        <button
-          className={`bg-red-600 p-10 rounded-3xl m-10 justify-end`}
-          onClick={() => { setShowDate(false) }}>
-          Close
-        </button>
-        {/* TODO: REFACTOR SUCH THAT IT TAKES MORE THAN ONE DATE PLAN */}
-        <DateView
-          isShowing={showDateInfo}
-          placeInfo={!SelectedPlaces ? currentItem : SelectedPlaces[0].place}
-          dti={!SelectedPlaces ? null : SelectedPlaces[0].time}
-          ddi={!SelectedPlaces ? null : SelectedPlaces[0].date}
-        />
-      </div>
+      <PopUp
+        open={buttonClicked}
+        makeClosed={setButtonClicked}
+        children={
+          <>
+            <LocationDisplay
+              data={currentItem}
+            />
+            <button
+              className={`w-full py-2 px-4 ${SelectedPlaces?.find(place => place.place.id === currentItem?.id) ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} text-white font-semibold rounded-md transition duration-200 m-10`}
+              onClick={() => {
+                if (currentItem) {
+                  if (SelectedPlaces?.find(place => place.place.id === currentItem.id)) {
+                    setSelectedPlaces(SelectedPlaces.filter(place => place.place.id !== currentItem.id));
+                  } else {
+                    setSelectedPlaces(prev => prev ? [...prev, { place: currentItem, date: DateInfo, time: DateTime }] : [{ place: currentItem, date: DateInfo, time: DateTime }]);
+                  }
+                }
+                console.log(SelectedPlaces);
+              }}
+            >
+              {SelectedPlaces?.find(place => place.place.id === currentItem?.id) ? 'Remove' : 'Add'}
+            </button>
+          </>
+        }
+      />
+      <PopUp
+        open={showDate}
+        makeClosed={setShowDate}
+        children={
+          <>
+            <DateView
+              isShowing={showDateInfo}
+              placeInfo={!SelectedPlaces ? currentItem : SelectedPlaces[0].place}
+              dti={!SelectedPlaces ? null : SelectedPlaces[0].time}
+              ddi={!SelectedPlaces ? null : SelectedPlaces[0].date}
+            />
+          </>
+        }
+      />
       <div className={`z-2 min-h-screen font-mono flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-800 py-12 px-4 sm:px-6 lg:px-8`}>
         <form className={`z-2 -transform-x-14 max-w-md w-full space-y-3 bg-white/10 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-purple-300/20 transform transition-transform duration-500 ${responseRecieved ? '-translate-x-[500%]' : ''}`} onSubmit={handleSubmit}>
           <h1 className="text-3xl font-bold text-center text-gray-900">Plan a Day Out!</h1>
