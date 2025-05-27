@@ -14,6 +14,7 @@ import { DateView } from "@/src/components/dateView";
 import { Slider } from "@/src/components/FormComponents/slider";
 import { DateInput } from "@/src/components/FormComponents/dateInput";
 import { TimeInput } from "@/src/components/FormComponents/timeInput";
+import { KeywordSearch } from "@/src/components/FormComponents/keywordSearch";
 
 export default function Home() {
 
@@ -169,32 +170,28 @@ export default function Home() {
                 <label className="block mb-2 text-sm font-medium text-gray-700">Select Time Range</label>
                 <div className="flex gap-4">
                   <TimeInput
-                    label = "StartTime"
-                    htmlfor = "startTime"
-                    id = "startTime"
-                    onChange = {setStartTime}
+                    label="StartTime"
+                    htmlfor="startTime"
+                    id="startTime"
+                    onChange={setStartTime}
                   />
                   <TimeInput
-                    label = "EndTime"
-                    htmlfor = "endTime"
-                    id = "endTIme"
-                    onChange = {setEndTime}
+                    label="EndTime"
+                    htmlfor="endTime"
+                    id="endTIme"
+                    onChange={setEndTime}
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-full max-w-md mx-auto p-4">
-            <label htmlFor="search" className="block mb-2 text-sm font-medium text-gray-700">Search for places</label>
-            <input
-              type="text"
-              id="search"
-              value={userSearch}
-              onChange={(e) => setUserSearch(e.target.value)}
-              placeholder="Enter keywords..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <KeywordSearch
+            htmlfor="search"
+            value={userSearch}
+            onChange={setUserSearch}
+            placeholder="Enter Keywords"
+            label="Search for places"
+          />
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200"
