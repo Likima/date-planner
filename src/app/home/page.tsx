@@ -3,7 +3,7 @@
 // issues: cannot remove things from list
 // date is null occasionally???
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { useLocation } from "@/src/app/locationContext"
 import { Place, DateDayInfo, DateTimeInfo, PlaceNode } from "@/src/types/types"
@@ -16,6 +16,7 @@ import { DateInput } from "@/src/components/FormComponents/dateInput";
 import { TimeInput } from "@/src/components/FormComponents/timeInput";
 import { KeywordSearch } from "@/src/components/FormComponents/keywordSearch";
 import { PopUp } from "@/src/components/PopUps/popup";
+import { LocationArrayContainer } from "@/src/components/LocationComponents/LocationArrayContainer";
 
 export default function Home() {
 
@@ -214,53 +215,12 @@ export default function Home() {
         >
           View Current Date
         </button>
-        <div className={`overflow-y-auto h-[50vh] max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-all duration-500 ease-in-out my-auto fixed right-8 ${responseRecieved ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}>
-          <h1 className="text-3xl font-bold text-center text-gray-900">Places around you!</h1>
-          {data.length > 0 ? (
-            data.map((item: Place) => (
-              <button
-                key={item.id}
-                className="bg-white/20 backdrop-blur-sm rounded-lg p-4 mb-4 hover:bg-white/30 transition-all duration-300"
-                onClick={(e) => { handleButtonClick(e, item) }}
-              >
-                <h3 className="text-xl font-semibold text-white mb-2">
-                  {`${item.displayName.text} (${getDistance(item.location?.longitude, item.location?.latitude)}km)`}
-                </h3>
-                <p className="text-gray-200 text-sm mb-2">
-                  {item.formattedAddress}
-                </p>
-                <div className="flex justify-between items-center text-sm text-gray-300">
-                  <span className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    {item.priceLevel === 'PRICE_LEVEL_FREE' ? 'Free' :
-                      item.priceLevel === 'PRICE_LEVEL_INEXPENSIVE' ? '$' :
-                        item.priceLevel === 'PRICE_LEVEL_MODERATE' ? '$$' :
-                          item.priceLevel === 'PRICE_LEVEL_EXPENSIVE' ? '$$$' :
-                            item.priceLevel === 'PRICE_LEVEL_VERY_EXPENSIVE' ? '$$$$' : 'Price Level Unavailable'}
-                  </span>
-                  {item.rating && (
-                    <span className="flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                      </svg>
-                      {item.rating}
-                    </span>
-                  )}
-                </div>
-              </button>
-            ))) : (
-            <div className="text-white text-center">
-              No places found in this area
-            </div>)}
-          <button
-            className={`w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200 m-10}`}
-            onClick={() => { setResponseRecieved(false) }}
-          >
-            Back to Planning...
-          </button>
-        </div>
+        <LocationArrayContainer
+          data={data}
+          showMoreDetails={handleButtonClick}
+          navBack={setResponseRecieved}
+          visible={responseRecieved}
+        />
       </div>
     </div>
   );
