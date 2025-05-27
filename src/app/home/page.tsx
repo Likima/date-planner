@@ -1,5 +1,8 @@
 'use client';
 
+// issues: cannot remove things from list
+// date is null occasionally???
+
 import { useState, useEffect } from "react";
 
 import { useLocation } from "@/src/app/locationContext"
@@ -8,6 +11,7 @@ import { getDistance } from "@/src/core/distanceFunctions";
 import { LocationDisplay } from "@/src/components/locationDisplay";
 import { ErrorMessage } from "@/src/components/errorMessage";
 import { DateView } from "@/src/components/dateView";
+import { Slider } from "@/src/components/FormComponents/slider";
 
 export default function Home() {
 
@@ -135,6 +139,7 @@ export default function Home() {
           onClick={() => { setShowDate(false) }}>
           Close
         </button>
+        {/* TODO: REFACTOR SUCH THAT IT TAKES MORE THAN ONE DATE PLAN */}
         <DateView
           isShowing={showDateInfo}
           placeInfo={!SelectedPlaces ? currentItem : SelectedPlaces[0].place}
@@ -147,23 +152,13 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-center text-gray-900">Plan a Day Out!</h1>
           <div className="space-y-4">
             <div>
-              <div className="w-full max-w-md mx-auto p-4">
-                <label htmlFor="slider" className="block mb-2 text-sm font-medium text-gray-700">Choose a Suitable Distance</label>
-                <input
-                  type="range"
-                  id="slider"
-                  min="0"
-                  max="20"
-                  value={sliderValue}
-                  onChange={(e) => setSliderValue(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                />
-                <div className="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>0</span>
-                  <span>20</span>
-                </div>
-                <div>{sliderValue}km</div>
-              </div>
+              <Slider
+                value={sliderValue}
+                onChange={setSliderValue}
+                min={0}
+                max={20}
+                label="Choose a Suitable Distance"
+              />
               <div className="w-full max-w-md mx-auto p-4">
                 <label htmlFor="day" className="block mb-2 text-sm font-medium text-gray-700">Select a Date</label>
                 <input
