@@ -1,4 +1,4 @@
-import { PlaceNode } from "@/src/types/types"
+import { PlaceNode } from "@/src/types"
 
 interface PNE_Props {
     item: PlaceNode

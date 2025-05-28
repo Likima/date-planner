@@ -6,8 +6,7 @@
 import { useState } from "react";
 
 import { useLocation } from "@/src/app/locationContext"
-import { Place, DateDayInfo, DateTimeInfo, PlaceNode } from "@/src/types/types"
-import { getDistance } from "@/src/core/distanceFunctions";
+import { Place, DateDayInfo, DateTimeInfo, PlaceNode } from "@/src/types"
 import { LocationDisplay } from "@/src/components/locationDisplay";
 import { ErrorMessage } from "@/src/components/errorMessage";
 import { DateView } from "@/src/components/dateView";
@@ -139,6 +138,8 @@ export default function Home() {
           </>
         }
       />
+
+
       <PopUp
         open={showDate}
         makeClosed={setShowDate}
@@ -146,9 +147,11 @@ export default function Home() {
           <>
             <DateView
               isShowing={showDateInfo}
-              placeInfo={!SelectedPlaces ? currentItem : SelectedPlaces[0].place}
-              dti={!SelectedPlaces ? null : SelectedPlaces[0].time}
-              ddi={!SelectedPlaces ? null : SelectedPlaces[0].date}
+              // placeInfo={!SelectedPlaces ? currentItem : SelectedPlaces[0].place}
+
+              placeInfo={SelectedPlaces?.[0]?.place ?? currentItem}
+              dti={SelectedPlaces?.[0]?.time ?? null}
+              ddi={SelectedPlaces?.[0]?.date ?? null}
             />
           </>
         }

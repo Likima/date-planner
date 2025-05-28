@@ -1,4 +1,4 @@
-import { PlaceNode } from "@/src/types/types"
+import { PlaceNode } from "@/src/types"
 import { PlaceNodeElement } from "./PlaceNodeElement"
 
 interface PNA_Props {
