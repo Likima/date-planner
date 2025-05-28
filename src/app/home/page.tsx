@@ -37,11 +37,13 @@ export default function Home() {
 
   const [userSearch, setUserSearch] = useState('');
 
-  // states for user errors
-  const [dateNotSet, setDateNotSet] = useState(false); // <- false if there is a dti field not set
-  const [timeNotSet, setTimeNotSet] = useState(false);
-  const [searchNotSet, setSearchNotSet] = useState(false);
   const [showDateInfo, setShowDateInfo] = useState(false);
+
+  const [errors, setErrors] = useState({
+    time: false,
+    date: false,
+    search: false
+  })
 
   const handleButtonClick = (e: React.FormEvent, item: Place) => {
     e.preventDefault();
@@ -53,20 +55,11 @@ export default function Home() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // basic checks for if the form is filled out
-    if (!startTime || !endTime) {
-      setTimeNotSet(true);
-    } else {
-      setDateTime({ startTime: startTime, endTime: endTime })
-      setTimeNotSet(false);
-    }
-    setDateNotSet(!DateInfo);
-
-    if (userSearch == '') {
-      setSearchNotSet(true);
-    } else {
-      setSearchNotSet(false);
-    }
+    setErrors({
+      time: !startTime || !endTime,
+      date: !DateInfo,
+      search: userSearch === ''
+    })
 
 
     if (coords && coords.lng && coords.lat) {
@@ -147,8 +140,6 @@ export default function Home() {
           <>
             <DateView
               isShowing={showDateInfo}
-              // placeInfo={!SelectedPlaces ? currentItem : SelectedPlaces[0].place}
-
               placeInfo={SelectedPlaces?.[0]?.place ?? currentItem}
               dti={SelectedPlaces?.[0]?.time ?? null}
               ddi={SelectedPlaces?.[0]?.date ?? null}
@@ -205,9 +196,9 @@ export default function Home() {
             Add
           </button>
 
-          <ErrorMessage showCondition={timeNotSet} message={"Enter a valid time"} />
-          <ErrorMessage showCondition={dateNotSet} message={"Enter a valid day"} />
-          <ErrorMessage showCondition={searchNotSet} message={"Enter a search request!"} />
+          <ErrorMessage showCondition={errors.time} message="Enter a valid time" />
+          <ErrorMessage showCondition={errors.date} message="Enter a valid day" />
+          <ErrorMessage showCondition={errors.search} message="Enter a search request!" />
         </form>
         <button
           className={`z-10 w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200 m-10 ${responseRecieved ? '-translate-x-[500%]' : ''}`}

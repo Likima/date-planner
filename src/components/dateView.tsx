@@ -1,6 +1,6 @@
 "use client"
 
-import { Place, PlaceNode, DateTimeInfo, DateDayInfo } from "../types/types"
+import { Place, PlaceNode, DateTimeInfo, DateDayInfo } from "../types"
 
 export function DateView(props: { isShowing: boolean, placeInfo: Place | null, dti: DateTimeInfo | null, ddi: DateDayInfo | null }) {
 
