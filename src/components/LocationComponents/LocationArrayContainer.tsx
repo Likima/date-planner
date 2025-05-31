@@ -1,4 +1,4 @@
-import { Place } from "@/src/types";
+import { Place } from "@/types";
 import React from "react";
 import { LocationArrayEntry } from "./LocationArrayEntry";
 

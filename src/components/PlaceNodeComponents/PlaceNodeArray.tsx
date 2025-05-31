@@ -1,4 +1,4 @@
-import { PlaceNode } from "@/src/types"
+import { PlaceNode } from "@/types"
 import { PlaceNodeElement } from "./PlaceNodeElement"
 import { CompareDates } from "@/src/core/comparisons"
 
@@ -13,11 +13,11 @@ export function PlaceNodeArray({ data }: PNA_Props) {
             {
                 data && data.length > 0 ?
                     (
-                        data.sort((a,b)=>{
-                            return CompareDates(a.date,b.date)
+                        data.sort((a, b) => {
+                            return CompareDates(a.date, b.date)
                         }).map((item: PlaceNode) => (
                             <PlaceNodeElement
-                                item = {item}
+                                item={item}
                             />
                         ))
                     ) : (

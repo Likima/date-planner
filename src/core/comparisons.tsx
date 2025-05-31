@@ -1,4 +1,4 @@
-import { DateDayInfo, DateTimeInfo } from "../types";
+import { DateDayInfo, DateTimeInfo } from "../../types";
 
 
 export function CompareDates(a: DateDayInfo | null, b: DateDayInfo | null): number {

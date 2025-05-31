@@ -1,4 +1,4 @@
-import { DateDayInfo, DateTimeInfo } from "@/src/types";
+import { DateDayInfo, DateTimeInfo } from "@/types";
 
 export interface Place {
     name: string;

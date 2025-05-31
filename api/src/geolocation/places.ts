@@ -1,6 +1,5 @@
 import express from 'express';
 import axios from 'axios';
-import { resolve } from 'path';
 
 interface GeolocationError {
     code: number;

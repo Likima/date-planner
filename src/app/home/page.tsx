@@ -6,7 +6,7 @@
 import { useState } from "react";
 
 import { useLocation } from "@/src/app/locationContext"
-import { Place, DateDayInfo, DateTimeInfo, PlaceNode } from "@/src/types"
+import { Place, DateDayInfo, DateTimeInfo, PlaceNode } from "@/types"
 import { LocationDisplay } from "@/src/components/locationDisplay";
 import { ErrorMessage } from "@/src/components/errorMessage";
 import { DateView } from "@/src/components/dateView";
