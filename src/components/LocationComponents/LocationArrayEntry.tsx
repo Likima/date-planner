@@ -1,5 +1,5 @@
 import { getDistance } from "@/src/core/distanceFunctions";
-import { Place } from "@/src/types/types";
+import { Place } from "@/src/types";
 import React from "react";
 
 

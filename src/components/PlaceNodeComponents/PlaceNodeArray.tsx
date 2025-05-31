@@ -1,5 +1,6 @@
 import { PlaceNode } from "@/src/types"
 import { PlaceNodeElement } from "./PlaceNodeElement"
+import { CompareDates } from "@/src/core/comparisons"
 
 interface PNA_Props {
     data: PlaceNode[] | null
@@ -12,7 +13,9 @@ export function PlaceNodeArray({ data }: PNA_Props) {
             {
                 data && data.length > 0 ?
                     (
-                        data.map((item: PlaceNode) => (
+                        data.sort((a,b)=>{
+                            return CompareDates(a.date,b.date)
+                        }).map((item: PlaceNode) => (
                             <PlaceNodeElement
                                 item = {item}
                             />
