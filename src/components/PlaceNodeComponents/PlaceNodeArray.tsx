@@ -22,7 +22,7 @@ export function PlaceNodeArray({ data }: PNA_Props) {
                         ))
                     ) : (
                         <div>
-                            No Places found in the area
+                            No places added to list
                         </div>
                     )
             }

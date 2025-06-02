@@ -6,6 +6,7 @@
 import { useState } from "react";
 
 import { useLocation } from "@/src/components/Context/locationContext"
+import { usePlace } from "@/src/components/Context/placeContext";
 import { Place, DateDayInfo, DateTimeInfo, PlaceNode } from "@/types"
 import { LocationDisplay } from "@/src/components/locationDisplay";
 import { ErrorMessage } from "@/src/components/errorMessage";
@@ -21,6 +22,7 @@ import { PlaceNodeArray } from "@/src/components/PlaceNodeComponents/PlaceNodeAr
 export default function Home() {
 
   const { coords } = useLocation();
+  const { setPlaces } = usePlace();
 
   // states for user input
   const [sliderValue, setSliderValue] = useState(5);
@@ -144,16 +146,24 @@ export default function Home() {
         makeClosed={setShowDate}
         children={
           <>
-            {/* Migrate to send the array to @code{PlaceNodeComponent} */}
             <PlaceNodeArray
               data={SelectedPlaces}
             />
-            {/* <DateView
-              isShowing={showDateInfo}
-              placeInfo={SelectedPlaces?.[0]?.place ?? currentItem}
-              dti={SelectedPlaces?.[0]?.time ?? null}
-              ddi={SelectedPlaces?.[0]?.date ?? null}
-            /> */}
+            {/* Create button here that allows user to confirm that this is the date they want */}
+            {/* Redirect to /dateview */}
+            <button
+              className={`z-10 w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200 m-10 ${responseRecieved ? '-translate-x-[500%]' : ''}`}
+              onClick={()=>{
+                if(!SelectedPlaces) {
+                  return;
+                } else {
+                  setPlaces(SelectedPlaces)
+                }
+                window.location.href = '/dateview';
+              }}
+            >
+              Finish
+            </button>
           </>
         }
       />
@@ -177,13 +187,13 @@ export default function Home() {
                 <label className="block mb-2 text-sm font-medium text-gray-700">Select Time Range</label>
                 <div className="flex gap-4">
                   <TimeInput
-                    label="StartTime"
+                    label="Get There At"
                     htmlfor="startTime"
                     id="startTime"
                     onChange={setStartTime}
                   />
                   <TimeInput
-                    label="EndTime"
+                    label="Leave There At"
                     htmlfor="endTime"
                     id="endTIme"
                     onChange={setEndTime}

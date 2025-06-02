@@ -1,4 +1,4 @@
-import Map from "@/src/components/map";
+import Map from "@/src/components/maps/map_deprecated";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 

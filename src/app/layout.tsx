@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/src/components/header"
+import { Header } from "@/src/components/header";
 import { AuthProvider } from "../components/Context/authContext";
-import { LocationProvider } from "../components/Context/locationContext"
+import { LocationProvider } from "../components/Context/locationContext";
+import { PlaceProvider } from "../components/Context/placeContext";
 import { LocationInitializer } from "@/src/components/LocationInitializer";
 
 const geistSans = Geist({
@@ -28,14 +29,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthProvider>
           <LocationProvider>
-            <LocationInitializer />
-            <Header />
-            {children}
+            <PlaceProvider>
+              <LocationInitializer />
+              <Header />
+              {children}
+            </PlaceProvider>
           </LocationProvider>
         </AuthProvider>
       </body>
