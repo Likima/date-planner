@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-import { useAuth } from '@/src/app/authContext'
+import { useAuth } from '@/src/components/Context/authContext'
 
 export function Header(props: React.PropsWithChildren) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)

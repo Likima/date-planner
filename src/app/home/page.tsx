@@ -5,7 +5,7 @@
 
 import { useState } from "react";
 
-import { useLocation } from "@/src/app/locationContext"
+import { useLocation } from "@/src/components/Context/locationContext"
 import { Place, DateDayInfo, DateTimeInfo, PlaceNode } from "@/types"
 import { LocationDisplay } from "@/src/components/locationDisplay";
 import { ErrorMessage } from "@/src/components/errorMessage";
@@ -16,6 +16,7 @@ import { TimeInput } from "@/src/components/FormComponents/timeInput";
 import { KeywordSearch } from "@/src/components/FormComponents/keywordSearch";
 import { PopUp } from "@/src/components/PopUps/popup";
 import { LocationArrayContainer } from "@/src/components/LocationComponents/LocationArrayContainer";
+import { PlaceNodeArray } from "@/src/components/PlaceNodeComponents/PlaceNodeArray";
 
 export default function Home() {
 
@@ -59,6 +60,11 @@ export default function Home() {
       time: !startTime || !endTime,
       date: !DateInfo,
       search: userSearch === ''
+    })
+
+    setDateTime({
+      startTime: startTime,
+      endTime: endTime
     })
 
 
@@ -138,12 +144,16 @@ export default function Home() {
         makeClosed={setShowDate}
         children={
           <>
-            <DateView
+            {/* Migrate to send the array to @code{PlaceNodeComponent} */}
+            <PlaceNodeArray
+              data={SelectedPlaces}
+            />
+            {/* <DateView
               isShowing={showDateInfo}
               placeInfo={SelectedPlaces?.[0]?.place ?? currentItem}
               dti={SelectedPlaces?.[0]?.time ?? null}
               ddi={SelectedPlaces?.[0]?.date ?? null}
-            />
+            /> */}
           </>
         }
       />

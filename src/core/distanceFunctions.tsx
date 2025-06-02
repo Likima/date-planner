@@ -1,4 +1,4 @@
-import { useLocation } from "@/src/app/locationContext"
+import { useLocation } from "@/src/components/Context/locationContext"
 
 const COORDINATE_TO_KM = 111.32;
 

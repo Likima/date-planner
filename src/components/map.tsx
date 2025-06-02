@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
-import { useLocation } from "@/src/app/locationContext";
+import { useLocation } from "@/src/components/Context/locationContext";
 
 const Map = () => {
   const { coords } = useLocation();

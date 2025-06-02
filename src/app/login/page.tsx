@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { useAuth } from '@/src/app/authContext'
+import { useAuth } from '@/src/components/Context/authContext'
 import { ErrorMessage } from '@/src/components/errorMessage';
 
 export default function LoginPage() {
