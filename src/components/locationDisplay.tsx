@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Place } from "../../types/types";
+import { Place } from "@/types";
 
 export function LocationDisplay(props: { data: Place | null }) {
     if (!props.data) {

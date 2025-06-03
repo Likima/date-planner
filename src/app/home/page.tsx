@@ -3,7 +3,8 @@
 // issues: cannot remove things from list
 // date is null occasionally???
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 
 import { useLocation } from "@/src/components/Context/locationContext"
 import { usePlace } from "@/src/components/Context/placeContext";
@@ -22,7 +23,8 @@ import { PlaceNodeArray } from "@/src/components/PlaceNodeComponents/PlaceNodeAr
 export default function Home() {
 
   const { coords } = useLocation();
-  const { setPlaces } = usePlace();
+  const { places, setPlaces } = usePlace();
+  const router = useRouter();
 
   // states for user input
   const [sliderValue, setSliderValue] = useState(5);
@@ -47,6 +49,24 @@ export default function Home() {
     date: false,
     search: false
   })
+
+  useEffect(() => {
+    if (SelectedPlaces && SelectedPlaces.length > 0) {
+      console.log('Selected places updated:', SelectedPlaces);
+    }
+  }, [SelectedPlaces]);
+
+  const handleFinish = () => {
+    if (!SelectedPlaces || SelectedPlaces.length === 0) {
+      console.error('No places selected');
+      return;
+    }
+    console.log("Selected Places:", SelectedPlaces)
+
+    setPlaces(SelectedPlaces);
+
+    router.push('/dateview');
+  };
 
   const handleButtonClick = (e: React.FormEvent, item: Place) => {
     e.preventDefault();
@@ -149,18 +169,9 @@ export default function Home() {
             <PlaceNodeArray
               data={SelectedPlaces}
             />
-            {/* Create button here that allows user to confirm that this is the date they want */}
-            {/* Redirect to /dateview */}
             <button
               className={`z-10 w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200 m-10 ${responseRecieved ? '-translate-x-[500%]' : ''}`}
-              onClick={()=>{
-                if(!SelectedPlaces) {
-                  return;
-                } else {
-                  setPlaces(SelectedPlaces)
-                }
-                window.location.href = '/dateview';
-              }}
+              onClick={handleFinish}
             >
               Finish
             </button>
