@@ -17,6 +17,7 @@ export function PlaceNodeArray({ data }: PNA_Props) {
                             return CompareDates(a.date, b.date)
                         }).map((item: PlaceNode) => (
                             <PlaceNodeElement
+                                key={`${item.date}-${item.place.name}`} // scuffed...
                                 item={item}
                             />
                         ))

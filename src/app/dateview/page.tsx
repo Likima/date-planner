@@ -11,10 +11,9 @@ export default function DateViewPage() {
         lng: place?.place?.location?.longitude ?? 0,
     }));
 
-    console.log("Coordinates: ", coordinates)
     return (
-        <div>
+        <div className="fixed inset-0 w-screen h-screen overflow-hidden">
             <Map waypoints={coordinates} />
         </div>
-    )
+    );
 }
