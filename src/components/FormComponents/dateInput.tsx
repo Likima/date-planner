@@ -1,4 +1,4 @@
-import { DateDayInfo } from "@/src/types/types"
+import { DateDayInfo } from "@/types"
 
 interface DateInputProps {
     label: string;

@@ -10,6 +10,7 @@ export default function DateViewPage() {
         <div className="flex h-screen w-screen overflow-hidden">
             <div className="w-80 bg-white shadow-lg p-4 overflow-y-auto">
                 <h2 className="text-xl font-bold mb-4">Your Date Places</h2>
+                
                 <div className="space-y-2">
                     {places.map((place, index) => (
                         <div key={index} className="p-3 bg-gray-50 rounded-lg">

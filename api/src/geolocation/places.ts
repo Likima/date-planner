@@ -6,10 +6,6 @@ interface GeolocationError {
     message: string;
 }
 
-function errors(err: GeolocationError): void {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-}
-
 export default function findPlaces(app: express.Application) {
     const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
@@ -54,14 +50,6 @@ export default function findPlaces(app: express.Application) {
 
     app.post('/places/specific', async (req, res) => {
         const search = req.body.search;
-        // const lat = req.body.latitude;
-        // const lng = req.body.longitude;
-        // const radius = req.body.radius;
-
-        // if (!lat || !lng || !radius || !search) {
-        //     return res.status(400).json({ error: 'Missing required parameters' });
-        // }
-
         try {
             const url = `https://places.googleapis.com/v1/places:searchText`;
             const response = await axios.post(url, {
