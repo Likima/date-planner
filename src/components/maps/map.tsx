@@ -6,13 +6,10 @@ import { useLocation } from "../Context/locationContext";
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { Marker } from "./marker"
+import { PlaceNode } from "@/types";
+import { LuAtom } from "react-icons/lu";
 
-type Coordinate = {
-    lat: number;
-    lng: number;
-}
-
-export function Map(props: { waypoints: Coordinate[] }) {
+export function Map(props: { waypoints: PlaceNode[] }) {
     const { coords } = useLocation();
     const mapContainer = useRef(null);
     const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -49,29 +46,34 @@ export function Map(props: { waypoints: Coordinate[] }) {
 
         console.log('Waypoints received:', props.waypoints);
 
-        // Clear existing markers
         markersRef.current.forEach(marker => marker.remove());
         markersRef.current = [];
 
         if (props.waypoints.length > 0) {
             const bounds = new mapboxgl.LngLatBounds();
 
-            props.waypoints.forEach(waypoint => {
-                // Add to bounds
-                bounds.extend([waypoint.lng, waypoint.lat]);
 
-                // Create marker
+            props.waypoints.forEach(waypoint => {
+                const lng = waypoint.place.location?.longitude ?? 0;
+                const lat = waypoint.place.location?.latitude ?? 0;
+                bounds.extend([lng, lat]);
+
                 const marker = new mapboxgl.Marker({
-                    color: "#FF0000"  // Make markers more visible
+                    color: "#FF0000"
                 })
-                    .setLngLat([waypoint.lng, waypoint.lat])
+                    .setLngLat([lng, lat])
+                    .setPopup(
+                        new mapboxgl.Popup({ offset: 25 })
+                            .setHTML(
+                                `<p>${waypoint.place.displayName.text} </p>`
+                            )
+                    )
                     .addTo(mapRef.current!);
 
                 markersRef.current.push(marker);
-                console.log('Marker added at:', [waypoint.lng, waypoint.lat]);
+                console.log('Marker added at:', [lng, lat]);
             });
 
-            // Fit bounds with padding
             mapRef.current.fitBounds(bounds, {
                 padding: 100,
                 maxZoom: 15
