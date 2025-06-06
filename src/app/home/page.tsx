@@ -42,8 +42,6 @@ export default function Home() {
 
   const [userSearch, setUserSearch] = useState('');
 
-  const [showDateInfo, setShowDateInfo] = useState(false);
-
   const [errors, setErrors] = useState({
     time: false,
     date: false,

@@ -1,11 +1,6 @@
 import express from 'express';
 import axios from 'axios';
 
-interface GeolocationError {
-    code: number;
-    message: string;
-}
-
 export default function findPlaces(app: express.Application) {
     const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 

@@ -4,10 +4,10 @@ import axios from 'axios';
 export default function searchPlaces(app: express.Application) {
     const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
-    app.post('/search', async (req, res) => {
+    app.post('/autocomplete', async (req, res) => {
         const { latitude: lat, longitude: lng, search_request: search } = req.body;
 
-        const radius = 500.0; // < just arbitrary ig
+        const radius = req.body.radius; // < just arbitrary ig
 
         if (!lat || !lng || !radius) { // added radius incase its a param later
             return res.status(400).json({ error: 'Missing lat, lng, or radius' });
