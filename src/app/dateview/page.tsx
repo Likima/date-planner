@@ -8,7 +8,7 @@ export default function DateViewPage() {
     const { places } = usePlace();
     const { coords } = useLocation();
 
-    async function autocomplete (rad: number, search: string) {
+    async function autocomplete(rad: number, search: string) {
         // pass the radius and do something with it later lmao
 
         try {
@@ -20,11 +20,14 @@ export default function DateViewPage() {
                 body: JSON.stringify({
                     latitude: coords?.lat,
                     longitude: coords?.lng,
-                    search: search,
+                    search_request: search,
                     radius: rad
                 }),
                 credentials: 'include'
             });
+
+            console.log(response.body)
+
         } catch (error) {
             console.error("Error autocompleting:", error);
         }
