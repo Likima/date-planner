@@ -11,25 +11,32 @@ interface LAC_Props {
 
 export function LocationArrayContainer({ data, showMoreDetails, navBack, visible }: LAC_Props) {
     return (
-        <div className={`overflow-y-auto h-[50vh] max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-lg border border-purple-300/20 transform transition-all duration-500 ease-in-out my-auto fixed right-8 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`}>
-            <h1 className="text-3xl font-bold text-center text-gray-900">Places around you!</h1>
-            {data && data.length > 0 ? (
-                data.map((item: Place) => (
-                    <LocationArrayEntry
-                        key={item.id}
-                        item={item}
-                        onClick={showMoreDetails}
-                    />
-                ))) : (
-                <div className="text-white text-center">
-                    No places found in this area
-                </div>)}
-            <button
-                className={`w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200 m-10}`}
-                onClick={() => { navBack(false) }}
-            >
-                Back to Planning...
-            </button>
+        <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 transition-all duration-500 ease-in-out
+            ${visible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+            <div className={`overflow-y-auto h-[80vh] max-w-md w-full space-y-8 bg-white/10 backdrop-blur-sm p-8 
+                rounded-lg shadow-lg border border-purple-300/20 transform transition-all duration-500 ease-in-out
+                ${visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+                <h1 className="text-3xl font-bold text-center text-white">Places around you!</h1>
+                {data && data.length > 0 ? (
+                    data.map((item: Place) => (
+                        <LocationArrayEntry
+                            key={item.id}
+                            item={item}
+                            onClick={showMoreDetails}
+                        />
+                    ))
+                ) : (
+                    <div className="text-white text-center">
+                        No places found in this area
+                    </div>
+                )}
+                <button
+                    className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200"
+                    onClick={() => { navBack(false) }}
+                >
+                    Back to Planning...
+                </button>
+            </div>
         </div>
-    )
+    );
 }

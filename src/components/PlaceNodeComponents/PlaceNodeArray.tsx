@@ -8,25 +8,28 @@ interface PNA_Props {
 
 export function PlaceNodeArray({ data }: PNA_Props) {
     return (
-        <div className="p-10">
-            <h1 className="text-3xl font-bold text-center text-gray-900">Your Current Date</h1>
-            {
-                data && data.length > 0 ?
-                    (
-                        data.sort((a, b) => {
-                            return CompareDates(a.date, b.date)
-                        }).map((item: PlaceNode) => (
+        <div className="max-w-4xl mx-auto p-8">
+            <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
+                Your Current Date
+            </h1>
+            {data && data.length > 0 ? (
+                <div className="space-y-4">
+                    {data
+                        .sort((a, b) => CompareDates(a.date, b.date))
+                        .map((item: PlaceNode) => (
                             <PlaceNodeElement
-                                key={`${item.date}-${item.place.name}`} // scuffed...
+                                key={`${item.date}-${item.place.name}`}
                                 item={item}
                             />
-                        ))
-                    ) : (
-                        <div>
-                            No places added to list
-                        </div>
-                    )
-            }
+                        ))}
+                </div>
+            ) : (
+                <div className="text-center py-12 bg-gray-50 rounded-lg">
+                    <p className="text-gray-500 text-lg">
+                        No places added to your date plan yet
+                    </p>
+                </div>
+            )}
         </div>
     )
 }

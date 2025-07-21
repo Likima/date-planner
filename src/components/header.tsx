@@ -49,7 +49,7 @@ export function Header({ children }: React.PropsWithChildren) {
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="p-4 text-indigo-200 hover:text-white self-end"
         >
-          {isCollapsed ? '→' : '←'}
+          {isCollapsed ? '+' : '-'}
         </button>
 
         {/* Navigation links */}

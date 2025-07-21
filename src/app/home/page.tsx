@@ -5,6 +5,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 import { useLocation } from "@/src/components/Context/locationContext"
 import { usePlace } from "@/src/components/Context/placeContext";
@@ -130,114 +131,98 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <PopUp
-        open={buttonClicked}
-        makeClosed={setButtonClicked}
-        children={
-          <>
-            <LocationDisplay
-              data={currentItem}
-            />
-            <button
-              className={`w-full py-2 px-4 ${SelectedPlaces?.find(place => place.place.id === currentItem?.id) ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} text-white font-semibold rounded-md transition duration-200 m-10`}
-              onClick={() => {
-                if (currentItem) {
-                  if (SelectedPlaces?.find(place => place.place.id === currentItem.id)) {
-                    setSelectedPlaces(SelectedPlaces.filter(place => place.place.id !== currentItem.id));
-                  } else {
-                    setSelectedPlaces(prev => prev ? [...prev, { place: currentItem, date: DateInfo, time: DateTime }] : [{ place: currentItem, date: DateInfo, time: DateTime }]);
-                  }
-                }
-                console.log(SelectedPlaces);
-              }}
-            >
-              {SelectedPlaces?.find(place => place.place.id === currentItem?.id) ? 'Remove' : 'Add'}
-            </button>
-          </>
-        }
-      />
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-purple-800">
+      {/* Planning Section */}
+      <div className="container mx-auto px-4 py-8 relative"> {/* Add relative positioning */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-4xl mx-auto relative z-10"
+        >
+          {/* Main Planning Form */}
+          <div className={`backdrop-blur-sm bg-white/10 rounded-2xl p-8 shadow-xl border border-white/20 
+            transition-all duration-500 ${responseRecieved ? 'translate-x-[-100vw]' : 'translate-x-0'}`}>
+            <h1 className="text-4xl font-bold text-white text-center mb-8">Plan Your Perfect Day</h1>
 
-
-      <PopUp
-        open={showDate}
-        makeClosed={setShowDate}
-        children={
-          <>
-            <PlaceNodeArray
-              data={SelectedPlaces}
-            />
-            <button
-              className={`z-10 w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200 m-10 ${responseRecieved ? '-translate-x-[500%]' : ''}`}
-              onClick={handleFinish}
-            >
-              Finish
-            </button>
-          </>
-        }
-      />
-      <div className={`z-2 min-h-screen font-mono flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-800 py-12 px-4 sm:px-6 lg:px-8`}>
-        <form className={`z-2 -transform-x-14 max-w-md w-full space-y-3 bg-white/10 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-purple-300/20 transform transition-transform duration-500 ${responseRecieved ? '-translate-x-[500%]' : ''}`} onSubmit={handleSubmit}>
-          <h1 className="text-3xl font-bold text-center text-gray-900">Plan a Day Out!</h1>
-          <div className="space-y-4">
-            <div>
-              <Slider
-                value={sliderValue}
-                onChange={setSliderValue}
-                min={0}
-                max={20}
-                label="Choose a Suitable Distance"
-              />
-              <DateInput
-                label="Choose a Date"
-                onChange={setDateInfo}
-              />
-              <div className="w-full max-w-md mx-auto p-4">
-                <label className="block mb-2 text-sm font-medium text-gray-700">Select Time Range</label>
-                <div className="flex gap-4">
-                  <TimeInput
-                    label="Get There At"
-                    htmlfor="startTime"
-                    id="startTime"
-                    onChange={setStartTime}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Left Column */}
+                <div className="space-y-6">
+                  <Slider
+                    value={sliderValue}
+                    onChange={setSliderValue}
+                    min={0}
+                    max={20}
+                    label="Search Radius (km)"
                   />
-                  <TimeInput
-                    label="Leave There At"
-                    htmlfor="endTime"
-                    id="endTIme"
-                    onChange={setEndTime}
+                  <DateInput
+                    label="Select Date"
+                    onChange={setDateInfo}
                   />
                 </div>
-              </div>
-            </div>
-          </div>
-          <KeywordSearch
-            htmlfor="search"
-            value={userSearch}
-            onChange={setUserSearch}
-            placeholder="Enter Keywords"
-            label="Search for places"
-          />
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200"
-          >
-            Add
-          </button>
 
-          <ErrorMessage showCondition={errors.time} message="Enter a valid time" />
-          <ErrorMessage showCondition={errors.date} message="Enter a valid day" />
-          <ErrorMessage showCondition={errors.search} message="Enter a search request!" />
-        </form>
-        <button
-          className={`z-10 w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md transition duration-200 m-10 ${responseRecieved ? '-translate-x-[500%]' : ''}`}
-          onClick={() => {
-            console.log(SelectedPlaces);
-            setShowDate(true);
-          }}
-        >
-          View Current Date
-        </button>
+                {/* Right Column */}
+                <div className="space-y-6">
+                  <div className="bg-white/5 rounded-xl p-6">
+                    <label className="text-white text-lg mb-4 block">Time Range</label>
+                    <div className="grid grid-cols-2 gap-4">
+                      <TimeInput
+                        label="Start"
+                        htmlfor="startTime"
+                        id="startTime"
+                        onChange={setStartTime}
+                      />
+                      <TimeInput
+                        label="End"
+                        htmlfor="endTime"
+                        id="endTime"
+                        onChange={setEndTime}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Search Section */}
+              <div className="mt-6">
+                <KeywordSearch
+                  htmlfor="search"
+                  value={userSearch}
+                  onChange={setUserSearch}
+                  placeholder="What are you looking for?"
+                  label="Search Places"
+                />
+              </div>
+
+              <div className="flex gap-4 mt-8">
+                <button
+                  type="submit"
+                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105"
+                >
+                  Find Places
+                </button>
+                {(SelectedPlaces?.length ?? 0) > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowDate(true)}
+                    className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105"
+                  >
+                    View Selected ({SelectedPlaces?.length ?? 0})
+                  </button>
+                )}
+              </div>
+
+              {/* Error Messages */}
+              <div className="space-y-2">
+                <ErrorMessage showCondition={errors.time} message="Please select both start and end times" />
+                <ErrorMessage showCondition={errors.date} message="Please select a date" />
+                <ErrorMessage showCondition={errors.search} message="Please enter a search term" />
+              </div>
+            </form>
+          </div>
+        </motion.div>
+
+        {/* Results Section */}
         <LocationArrayContainer
           data={data}
           showMoreDetails={handleButtonClick}
@@ -245,6 +230,54 @@ export default function Home() {
           visible={responseRecieved}
         />
       </div>
+
+      {/* Popups */}
+      <PopUp
+        open={buttonClicked}
+        makeClosed={setButtonClicked}
+        children={
+          <div className="p-6">
+            <LocationDisplay data={currentItem} />
+            <button
+              className={`mt-6 w-full py-3 px-6 rounded-xl text-white font-semibold transition-all duration-200 
+                ${SelectedPlaces?.find(place => place.place.id === currentItem?.id)
+                  ? 'bg-red-600 hover:bg-red-700'
+                  : 'bg-indigo-600 hover:bg-indigo-700'
+                }`}
+              onClick={() => {
+                if (currentItem) {
+                  if (SelectedPlaces?.find(place => place.place.id === currentItem.id)) {
+                    setSelectedPlaces(SelectedPlaces.filter(place => place.place.id !== currentItem.id));
+                  } else {
+                    setSelectedPlaces(prev => prev
+                      ? [...prev, { place: currentItem, date: DateInfo, time: DateTime }]
+                      : [{ place: currentItem, date: DateInfo, time: DateTime }]
+                    );
+                  }
+                }
+              }}
+            >
+              {SelectedPlaces?.find(place => place.place.id === currentItem?.id) ? 'Remove from Plan' : 'Add to Plan'}
+            </button>
+          </div>
+        }
+      />
+
+      <PopUp
+        open={showDate}
+        makeClosed={setShowDate}
+        children={
+          <div className="p-6">
+            <PlaceNodeArray data={SelectedPlaces} />
+            <button
+              className="mt-6 w-full py-3 px-6 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-all duration-200"
+              onClick={handleFinish}
+            >
+              Finalize Plan
+            </button>
+          </div>
+        }
+      />
     </div>
   );
 }
