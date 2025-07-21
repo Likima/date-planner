@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/src/components/Context/authContext'
 
-export function Header(props: React.PropsWithChildren) {
+export function Header({ children }: React.PropsWithChildren) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(true) // Start collapsed by default
   const { user, setUser } = useAuth()
 
   useEffect(() => {
@@ -26,55 +26,85 @@ export function Header(props: React.PropsWithChildren) {
         return res.json()
       })
       .then(data => {
-        console.log(data)
         setIsAuthenticated(true)
-        setUser(data.username) // Make sure this sets a string, not an object
+        setUser(data.username)
       })
       .catch(() => setIsAuthenticated(false))
   }
 
   return (
-    <div className={`fixed h-screen flex flex-col transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'
-      } bg-indigo-900/90 backdrop-blur-sm border-r border-indigo-500/30 z-50`}>
-      {/* Collapse button */}
-      <button
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="p-4 text-indigo-200 hover:text-white self-end"
-      >
-        {isCollapsed ? '→' : '←'}
-      </button>
+    <div className="relative">
+      {/* Blur overlay when sidebar is expanded */}
+      <div
+        className={`fixed inset-0 bg-black/10 backdrop-blur-sm z-40 transition-opacity duration-300 ${isCollapsed ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          }`}
+        onClick={() => setIsCollapsed(true)}
+      />
 
-      {/* Navigation links */}
-      <nav className="flex-1 flex flex-col space-y-4 p-4">
-        <Link href="/home" className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white">
-          {!isCollapsed && 'Home'}
-        </Link>
+      {/* Sidebar */}
+      <div className={`fixed h-screen flex flex-col transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'
+        } bg-indigo-900/90 backdrop-blur-sm border-r border-indigo-500/30 z-50`}>
+        {/* Collapse button - always visible */}
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="p-4 text-indigo-200 hover:text-white self-end"
+        >
+          {isCollapsed ? '→' : '←'}
+        </button>
 
-        <Link href="/Dashboard" className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white">
-          {!isCollapsed && 'Dashboard'}
-        </Link>
-
-        <Link href="/About" className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white">
-          {!isCollapsed && 'About'}
-        </Link>
-
-        {user ? (
-          <Link href="/profile" className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white">
-            {!isCollapsed && 'Profile'}
+        {/* Navigation links */}
+        <nav className="flex-1 flex flex-col space-y-4 p-4">
+          <Link
+            href="/home"
+            className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white"
+          >
+            <span className={isCollapsed ? 'hidden' : 'block'}>Home</span>
           </Link>
-        ) : (
-          <Link href="/login" className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white">
-            {!isCollapsed && 'Log in'}
+
+          <Link
+            href="/Dashboard"
+            className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white"
+          >
+            <span className={isCollapsed ? 'hidden' : 'block'}>Dashboard</span>
           </Link>
+
+          <Link
+            href="/About"
+            className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white"
+          >
+            <span className={isCollapsed ? 'hidden' : 'block'}>About</span>
+          </Link>
+
+          {user ? (
+            <Link
+              href="/profile"
+              className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white"
+            >
+              <span className={isCollapsed ? 'hidden' : 'block'}>Profile</span>
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="flex items-center p-3 rounded-lg hover:bg-indigo-800/50 transition-colors text-indigo-200 hover:text-white"
+            >
+              <span className={isCollapsed ? 'hidden' : 'block'}>Log in</span>
+            </Link>
+          )}
+        </nav>
+
+        {/* User info (when expanded) */}
+        {!isCollapsed && user && (
+          <div className="p-4 border-t border-indigo-500/30 text-indigo-200">
+            <p className="truncate">Welcome, {user.name}</p>
+          </div>
         )}
-      </nav>
+      </div>
 
-      {/* User info (when expanded) */}
-      {!isCollapsed && user && (
-        <div className="p-4 border-t border-indigo-500/30 text-indigo-200">
-          <p className="truncate">Welcome, {user.name}</p>
-        </div>
-      )}
+      {/* Main content */}
+      <div className={`transition-all duration-300 ${isCollapsed ? 'ml-20' : 'ml-64'
+        } ${!isCollapsed ? 'blur-sm' : ''}`}>
+        {children}
+      </div>
     </div>
   )
 }

@@ -34,8 +34,9 @@ export default function RootLayout({
           <LocationProvider>
             <PlaceProvider>
               <LocationInitializer />
-              <Header />
-              {children}
+              <Header>
+                {children}
+              </Header>
             </PlaceProvider>
           </LocationProvider>
         </AuthProvider>
